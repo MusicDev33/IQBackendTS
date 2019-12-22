@@ -1,3 +1,4 @@
+require('tsconfig-paths/register');
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -9,7 +10,8 @@ import mongoose from 'mongoose';
 import passport from 'passport';
 import path from 'path';
 
-import { dbConfig } from './config/database';
+import { dbConfig } from '@config/database';
+import { UserRoutes } from './config/routeDefs';
 import { port, apiBase, acceptedAgents } from './config/constants';
 
 import { Request, RequestHandler, Response } from 'express';
@@ -26,7 +28,7 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'DEVTEST')
   credentials = {key: privateKey, cert: certificate};
 }
 
-mongoose.connect(dbConfig.database);
+mongoose.connect(dbConfig.database, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set('useFindAndModify', false);
 
 mongoose.connection.on('connected', () => {
@@ -64,6 +66,10 @@ const checkAgent = (req: Request, res: Response, next: any) => {
 
 app.use(checkAgent);
 
+// Routes
+app.use(apiBase + 'users', UserRoutes);
+
+
 // create public folder with the index.html when finished
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -76,6 +82,6 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'DEVTEST')
 }
 
 app.listen(port, () => {
-  console.log('Inquantir Backend (TypeScript) started in mode \'' + process.env.NODE_ENV + '\'');
+  console.log('\nInquantir Backend (TypeScript) started in mode \'' + process.env.NODE_ENV + '\'');
   console.log('Port: ' + port);
 });

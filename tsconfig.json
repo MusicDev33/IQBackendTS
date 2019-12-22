@@ -8,17 +8,17 @@
         "moduleResolution": "node",
         "sourceMap": true,
         "outDir": "dist",
-        "baseUrl": ".",
+        "baseUrl": "src",
         "paths": {
-            "*": [
-                "node_modules/*"
-            ]
-        }
+          "@services/*": ["services/*"],
+          "@routes/*": ["routes/*"],
+          "@config/*": ["config/*"]
+        },
     },
     "include": [
-      "src/*.ts",
+      "empty.ts",
       "src/**/*.ts",
-      "empty.ts"
+      "src/*.ts"
     ],
     "exclude": [
       "node_modules"

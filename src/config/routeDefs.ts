@@ -1,1 +1,3 @@
-// Routes will be defined here.
+import UserRoutes from '@routes/users/routes';
+
+export { UserRoutes }
