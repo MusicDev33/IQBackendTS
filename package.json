@@ -42,6 +42,8 @@
   },
   "scripts": {
     "start": "ts-node src/index.ts",
+    "prod": "ts-node src/index.ts NODE_ENV=production",
+    "remotedev": "ts-node src/index.ts NODE_ENV=DEVTEST",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
