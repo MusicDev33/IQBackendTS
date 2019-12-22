@@ -1,6 +1,6 @@
 import { User } from '../models/user.model';
 import { Request, Response } from 'express';
-import mongoose from 'mongoose';
+import IControllerResponse from "@interfaces/IControllerResponse";
 
 // Singleton pattern, still not sure how I feel about it
 export default class UserController {
@@ -30,14 +30,19 @@ export default class UserController {
     }
   }
 
-  public async findOneUserByParameter(req: Request, res: Response) {
+  public async findOneUserByParameter(param: string, paramValue: string): Promise<IControllerResponse> {
     try {
       let query: any = {};
-      query[req.params.qparam] = req.params.paramvalue;
+      query[param] = paramValue;
       let foundUser = await User.findOne(query).exec();
-      return res.json({success: true, user: foundUser});
+      if (foundUser) {
+        return {success: true, payload: foundUser};
+      } else {
+        return {success: false, msg: 'Could not find user that matches \'' + param + '\' = \'' + paramValue + '\''};
+      }
     } catch (err) {
-      return res.json({success: false, msg: err});
+      return {success: false, msg: err};
     }
   }
+
 }

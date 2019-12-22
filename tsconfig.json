@@ -12,7 +12,8 @@
         "paths": {
           "@services/*": ["services/*"],
           "@routes/*": ["routes/*"],
-          "@config/*": ["config/*"]
+          "@config/*": ["config/*"],
+          "@interfaces/*": ["interfaces/*"]
         },
     },
     "include": [

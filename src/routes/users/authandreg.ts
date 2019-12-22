@@ -1,0 +1,1 @@
+import { validateRegister } from './validators';
