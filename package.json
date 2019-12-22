@@ -41,6 +41,7 @@
     "tsconfig-paths": "^3.9.0"
   },
   "scripts": {
+    "start": "ts-node src/index.ts"
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
