@@ -30,6 +30,7 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'DEVTEST')
 
 mongoose.connect(dbConfig.database, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 
 mongoose.connection.on('connected', () => {
   console.log('Database Connected: ' + dbConfig.database);
