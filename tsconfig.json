@@ -13,7 +13,8 @@
           "@services/*": ["services/*"],
           "@routes/*": ["routes/*"],
           "@config/*": ["config/*"],
-          "@interfaces/*": ["interfaces/*"]
+          "@interfaces/*": ["interfaces/*"],
+          "@models/*": ["models/*"]
         },
     },
     "include": [

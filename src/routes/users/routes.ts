@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 import rateLimit = require('express-rate-limit');
-import * as RouteFunctions from './usergetters';
+import * as RouteFunctions from './userroutes.controller';
 
 
 import UserController from '@services/user.controller';
@@ -24,7 +24,8 @@ const authLimit = rateLimit({
 
 // ROUTES
 
-router.post('/register', registerLimit, userController.addUser);
+router.post('/register', registerLimit, RouteFunctions.registerUserRoute);
+router.post('/authenticate', authLimit, RouteFunctions.authenticateUserRoute);
 
 router.get('/param/:qparam/:paramvalue', RouteFunctions.getUserByParamRoute);
 

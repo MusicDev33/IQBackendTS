@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'DEVTEST') {
 } else if (process.env.NODE_ENV === 'development') {
   dbConfig = {
     adminSecret: 'O@M8N2d@1yvcXgI1y784',
-    database: 'mongodb://localhost:27017/tstest',
+    database: 'mongodb://localhost:27017/iqtest',
     secret: '$1358hbafbg@@'
   };
 } else {

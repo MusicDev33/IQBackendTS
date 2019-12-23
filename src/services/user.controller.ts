@@ -1,5 +1,6 @@
-import { User } from '../models/user.model';
+import { User, IUser } from '@models/user.model';
 import { Request, Response } from 'express';
+import bcryptjs = require('bcryptjs');
 import IControllerResponse from "@interfaces/IControllerResponse";
 
 // Singleton pattern, still not sure how I feel about it
@@ -16,17 +17,53 @@ export default class UserController {
     return UserController.instance;
   }
 
-  public async addUser(req: Request, res: Response) {
+  public async addUser(newUser: IUser): Promise<IControllerResponse> {
     try {
-      let newUser = new User(req.body);
+      let existingUsers = await User.find( { $or: [{'email': newUser.email}, {'handle': newUser.handle}]} ).exec();
+      if (existingUsers.length) {
+        return {success: false, msg: 'Error - Try another handle or email'};
+      }
+      let salt = await bcryptjs.genSalt(13);
+      let hashedPassword = await bcryptjs.hash(newUser.password, salt);
+      newUser.password = hashedPassword;
 
       let savedUser = await newUser.save();
-      console.log(savedUser);
-      console.log('Saved!')
-      return res.json({success: true, user: savedUser});
+      if (savedUser) {
+        return {success: true, msg: 'Successfully registered user!'};
+      } else {
+        return {success: false, msg: 'Could not save user...'};
+      }
     } catch (err) {
       console.log('Error: ' + err);
-      return res.json({success: false, msg: err});
+      return {success: false, msg: err};
+    }
+  }
+
+  public async addGoogleUser(newUser: IUser): Promise<IControllerResponse> {
+    try {
+      let existingUsers = await User.find( { $or: [{'email': newUser.email}, {'handle': newUser.handle}]} ).exec();
+      if (existingUsers.length) {
+        return {success: false, msg: 'Error - Try another handle or email'};
+      }
+
+      let savedUser = await newUser.save();
+      if (savedUser) {
+        return {success: true, msg: 'Successfully registered user!'};
+      } else {
+        return {success: false, msg: 'Could not save user...'};
+      }
+    } catch (err) {
+      console.log('Error: ' + err);
+      return {success: false, msg: err};
+    }
+  }
+
+  public async comparePassword(userPass: string, hashedPassword: string): Promise<IControllerResponse> {
+    const isMatch = await bcryptjs.compare(userPass, hashedPassword);
+    if (isMatch) {
+      return {success: true, msg: 'Password match'};
+    } else {
+      return {success: false, msg: 'Wrong password'};
     }
   }
 
