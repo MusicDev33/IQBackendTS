@@ -26,8 +26,12 @@ const authLimit = rateLimit({
 
 router.post('/register', registerLimit, RouteFunctions.registerUserRoute);
 router.post('/authenticate', authLimit, RouteFunctions.authenticateUserRoute);
+router.post('/g/register', RouteFunctions.googleRegisterUserRoute);
+router.post('/g/authenticate', RouteFunctions.googleAuthUserRoute);
 
 router.get('/param/:qparam/:paramvalue', RouteFunctions.getUserByParamRoute);
+
+router.post('/set/:userid/:setparam', RouteFunctions.setUserPropertyRoute);
 
 
 const UserRoutes = router;

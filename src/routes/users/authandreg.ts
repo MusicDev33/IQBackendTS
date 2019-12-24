@@ -44,13 +44,17 @@ export const authenticateUserRoute = async (req: Request, res: Response) => {
   let userResponse;
   let isMatchResponse: IControllerResponse;
 
+  if (password.length === 0) {
+    return res.json({success: false, msg: 'Must input password'});
+  }
+
   if (login.indexOf('@') > -1) {
     userResponse = await userController.findOneUserByParameter('email', login);
   } else {
     userResponse = await userController.findOneUserByParameter('handle', login);
   }
 
-  if (userResponse.payload) {
+  if (userResponse.success && userResponse.payload) {
     const user = userResponse.payload;
     isMatchResponse = await userController.comparePassword(password, user.password);
     if (isMatchResponse.success) {
@@ -62,5 +66,7 @@ export const authenticateUserRoute = async (req: Request, res: Response) => {
     } else {
       res.json({success: false, msg: 'Wrong password!'})
     }
+  } else {
+    res.json(userResponse);
   }
 }

@@ -1,5 +1,4 @@
-import { getUserByParamRoute } from './usergetters';
-import { registerUserRoute, authenticateUserRoute } from './authandreg';
-
-export { getUserByParamRoute };
-export { registerUserRoute, authenticateUserRoute };
+export { getUserByParamRoute } from './usergetters';
+export { setUserPropertyRoute } from './usersetters';
+export { registerUserRoute, authenticateUserRoute } from './authandreg';
+export { googleRegisterUserRoute, googleAuthUserRoute } from './googleauthandreg';

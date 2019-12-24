@@ -1,5 +1,4 @@
 import { User, IUser } from '@models/user.model';
-import { Request, Response } from 'express';
 import bcryptjs = require('bcryptjs');
 import IControllerResponse from "@interfaces/IControllerResponse";
 
@@ -76,6 +75,20 @@ export default class UserController {
         return {success: true, payload: foundUser};
       } else {
         return {success: false, msg: 'Could not find user that matches \'' + param + '\' = \'' + paramValue + '\''};
+      }
+    } catch (err) {
+      return {success: false, msg: err};
+    }
+  }
+
+  public async saveUser(changedUser: IUser, changedParam: string): Promise<IControllerResponse> {
+    changedUser.markModified(changedParam);
+    try {
+      const savedUser = await changedUser.save();
+      if (savedUser) {
+        return {success: true, msg: 'Successfully changed bio!'};
+      } else {
+        return {success: false, msg: 'Couldn\'t change your bio and it\'s totally our fault. Try again?'};
       }
     } catch (err) {
       return {success: false, msg: err};
