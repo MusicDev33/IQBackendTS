@@ -1,16 +1,36 @@
-import UserController from '@services/user.controller';
+import userService from '@services/user.service';
+import questionService from '@services/question.service';
 import { Request, Response } from 'express';
-import IControllerResponse from '@interfaces/IControllerResponse';
 
-const userController = UserController.getInstance();
-
-const getUserByParamRoute = (req: Request, res: Response) => {
-  userController.findOneUserByParameter(req.params.qparam, req.params.paramvalue).then((result: IControllerResponse) => {
-    let response = {};
-    if (result.payload){ response = {success: result.success, user: result.payload}; }
-    if (result.msg) { response = {success: result.success, msg: result.msg}; }
-    return res.json(response);
-  });
+export const getUserByParamRoute = async (req: Request, res: Response) => {
+  const foundUser = await userService.findOneUserByParameter(req.params.qparam, req.params.paramvalue);
+  if (foundUser) {
+    foundUser.password = '';
+    return res.json({success: true, user: foundUser});
+  }
+  return res.json({success: false, msg: 'Could not find user'});
 }
 
-export { getUserByParamRoute };
+export const publicGetUserByHandleRoute = async (req: Request, res: Response) => {
+  const foundUser = await userService.findOneUserByParameter('handle', req.params.userhandle);
+  if (foundUser) {
+    foundUser.password = '';
+    foundUser.email = '';
+    foundUser.paidProgram = false;
+    foundUser.currentSources = [];
+    foundUser.currentSubjects = [];
+    foundUser.phoneNumber = '';
+    foundUser.fbTokens = [];
+    foundUser.googleID = '';
+    return res.json({success: true, user: foundUser});
+  }
+  return res.json({success: false, msg: 'Could not find user'});
+}
+
+export const getUserQuestionsRoute = async (req: Request, res: Response) => {
+  const foundQuestions = await questionService.findQuestionsByParameter('askerID', req.params.userid, {_id: -1});
+  if (foundQuestions) {
+    return res.json({success: true, questions: foundQuestions});
+  }
+  return res.json({success: false, msg: 'Could not find questions by User ID'});
+}

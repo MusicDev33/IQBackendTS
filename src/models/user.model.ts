@@ -8,15 +8,15 @@ export interface IUser extends Document {
   phoneNumber: string;
   password: string;
   type: string;
+  googleID: string;
   customization: any;
+  knowledge: any;
+  credentials: any;
+  profileHits: number;
+  paidProgram: boolean;
+  fbTokens: Array<string>;
   currentSources: Array<any>;
   currentSubjects: Array<any>;
-  profileHits: number;
-  knowledge: any;
-  googleID: string;
-  paidProgram: boolean;
-  credentials: any;
-  fbTokens: Array<string>;
 }
 
 const UserSchema: Schema = new Schema({

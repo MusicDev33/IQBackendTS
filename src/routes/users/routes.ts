@@ -1,11 +1,8 @@
 import express from 'express';
 const router = express.Router();
+import passport from 'passport';
 import rateLimit = require('express-rate-limit');
 import * as RouteFunctions from './userroutes.controller';
-
-
-import UserController from '@services/user.controller';
-const userController = UserController.getInstance();
 
 const registerLimit = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour window
@@ -29,9 +26,13 @@ router.post('/authenticate', authLimit, RouteFunctions.authenticateUserRoute);
 router.post('/g/register', RouteFunctions.googleRegisterUserRoute);
 router.post('/g/authenticate', RouteFunctions.googleAuthUserRoute);
 
+router.get('/public/handle/:userhandle', RouteFunctions.publicGetUserByHandleRoute);
 router.get('/param/:qparam/:paramvalue', RouteFunctions.getUserByParamRoute);
 
-router.post('/set/:userid/:setparam', RouteFunctions.setUserPropertyRoute);
+router.post('/set/:userid/:setparam', passport.authenticate('jwt', {session: false}), RouteFunctions.setUserPropertyRoute);
+
+// GETTERS
+router.get('/:userid/questions', RouteFunctions.getUserQuestionsRoute);
 
 
 const UserRoutes = router;

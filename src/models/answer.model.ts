@@ -5,11 +5,12 @@ export interface IAnswer extends Document {
   poster: string;
   posterID: string;
   posterHandle: string;
-  views: number;
   questionURL: string;
   questionID: string;
   questionText: string;
   time: string;
+  type: string;
+  views: number;
   votes: number;
   comments: Array<any>;
 }
@@ -24,6 +25,7 @@ const AnswerSchema: Schema = new Schema({
   questionID: {type: String, required: true},
   questionText: {type: String, required: true},
   time: {type: String, required: true},
+  type: {type: String, required: true, default: 'answer'},
   votes: {type: Number, required: true},
   comments: {type: Array},
 }, {

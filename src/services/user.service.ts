@@ -3,17 +3,17 @@ import bcryptjs = require('bcryptjs');
 import IControllerResponse from "@interfaces/IControllerResponse";
 
 // Singleton pattern, still not sure how I feel about it
-export default class UserController {
-  private static instance: UserController;
+class UserService {
+  private static instance: UserService;
 
   private constructor() {}
 
-  static getInstance(): UserController {
-    if (!UserController.instance) {
-      UserController.instance = new UserController();
+  static getInstance(): UserService {
+    if (!UserService.instance) {
+      UserService.instance = new UserService();
     }
 
-    return UserController.instance;
+    return UserService.instance;
   }
 
   public async addUser(newUser: IUser): Promise<IControllerResponse> {
@@ -66,18 +66,19 @@ export default class UserController {
     }
   }
 
-  public async findOneUserByParameter(param: string, paramValue: string): Promise<IControllerResponse> {
+  public async findOneUserByParameter(param: string, paramValue: string): Promise<IUser> {
     try {
       let query: any = {};
       query[param] = paramValue;
       let foundUser = await User.findOne(query).exec();
       if (foundUser) {
-        return {success: true, payload: foundUser};
+        return foundUser;
       } else {
-        return {success: false, msg: 'Could not find user that matches \'' + param + '\' = \'' + paramValue + '\''};
+        return null;
       }
     } catch (err) {
-      return {success: false, msg: err};
+      console.log(err);
+      return null;
     }
   }
 
@@ -94,5 +95,7 @@ export default class UserController {
       return {success: false, msg: err};
     }
   }
-
 }
+
+const userService = UserService.getInstance();
+export default userService;

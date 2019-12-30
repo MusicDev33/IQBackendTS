@@ -11,7 +11,8 @@ import passport from 'passport';
 import path from 'path';
 
 import { dbConfig } from '@config/database';
-import { UserRoutes } from './config/routeDefs';
+import { userPassportAuth } from '@config/passport';
+import { UserRoutes, QuestionRoutes } from './config/routeDefs';
 import { port, apiBase, acceptedAgents } from './config/constants';
 
 import { Request, RequestHandler, Response } from 'express';
@@ -53,8 +54,11 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+// Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
+userPassportAuth(passport);
 
 // Check IQ-User-Agent
 const checkAgent = (req: Request, res: Response, next: any) => {
@@ -69,7 +73,7 @@ app.use(checkAgent);
 
 // Routes
 app.use(apiBase + 'users', UserRoutes);
-
+app.use(apiBase + 'questions', QuestionRoutes);
 
 // create public folder with the index.html when finished
 app.use(express.static(path.join(__dirname, 'public')));

@@ -17,8 +17,9 @@ export const setUserPropertyRoute = async (req: Request, res: Response) => {
     user[req.params.setparam] = req.body.paramValue;
 
     const savedUserResult = await userController.saveUser(user, req.params.setparam);
-    res.json(savedUserResult);
+    console.log(savedUserResult);
+    return res.json(savedUserResult);
   } else {
-    res.json(foundUserResult);
+    return res.json(foundUserResult);
   }
 }

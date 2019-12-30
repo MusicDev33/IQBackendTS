@@ -19,7 +19,7 @@ export interface IQuestion extends Document {
 }
 
 const QuestionSchema: Schema = new Schema({
-  questionText: {type: String, required: true},
+  questionText: {type: String, required: true, unique: true},
   urlText: {type: String, required: true},
   asker: {type: String, required: true},
   askerID: {type: String, required: true},
