@@ -13,6 +13,16 @@ class QuestionService {
     return QuestionService.instance;
   }
 
+  public async getAllQuestions(): Promise<IQuestion[]> {
+    try {
+      const questions = await Question.find();
+      return questions;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
+
   public async addQuestion(newQuestion: IQuestion): Promise<IQuestion> {
     try {
       let savedQuestion = await newQuestion.save();
@@ -53,8 +63,8 @@ class QuestionService {
   public async saveQuestion(changedQuestion: IQuestion, changedParam: string): Promise<string> {
     changedQuestion.markModified(changedParam);
     try {
-      const savedUser = await changedQuestion.save();
-      if (savedUser) {
+      const savedQuestion = await changedQuestion.save();
+      if (savedQuestion) {
         return 'Successfully changed parameter \'' + changedParam + '\'';
       } else {
         return 'Couldn\'t change param \'' + changedParam + '\' and it\'s totally our fault. Try again?';

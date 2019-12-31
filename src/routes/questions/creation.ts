@@ -2,10 +2,12 @@ import questionService from '@services/question.service';
 import editLogService from '@services/editlog.service';
 import userService from '@services/user.service';
 import answerService from '@services/answer.service';
+import voteService from '@services/vote.service';
 import { Request, Response } from 'express';
 import { Question } from '@models/question.model';
 import { Answer } from '@models/answer.model';
 import { EditLog } from '@models/editlog.model';
+import { Vote } from '@models/vote.model';
 
 export const addQuestionRoute = async (req: Request, res: Response) => {
   let newQuestion = new Question({
@@ -83,6 +85,50 @@ export const addAnswerToQuestionRoute = async (req: Request, res: Response) => {
     return res.json({success: true, msg: 'Answer most likely got saved!', answer: savedAnswer})
   }
   return res.json({success: false, msg: 'Answer wasn\'t saved, and it was our fault...'})
+}
+
+export const addVoteToAnswerRoute = async (req: Request, res: Response) => {
+  const oldVote = await voteService.removeVote(req.params.answerid, req.params.userid);
+  const newVote = new Vote({
+    questionID: req.params.questionid,
+    answerID: req.params.answerid,
+    userID: req.params.userid,
+    vote: req.body.vote
+  });
+  const savedVote = await voteService.addVote(newVote);
+  const answer = await answerService.findOneAnswerByParameter('_id', req.params.answerid);
+  if (oldVote) {
+    answer.votes -= oldVote.vote;
+  }
+  answer.votes += Number(req.body.vote);
+  await answerService.saveAnswer(answer, 'votes');
+
+  const answers = await answerService.findAnswersByParameter('questionID', req.params.questionid);
+  const highestVotedAnswer = answers.reduce((prev, current) => {
+    if (+current.votes > +prev.votes) {
+      return current;
+    } else {
+      return prev;
+    }
+  });
+  const shortAnswer = {
+    _id: highestVotedAnswer._id,
+    answerText: highestVotedAnswer.answerText,
+    poster: highestVotedAnswer.poster,
+    posterID: highestVotedAnswer.posterID,
+    posterHandle: highestVotedAnswer.posterHandle
+  }
+
+  const question = await questionService.findOneQuestionByParameter('_id', req.params.questionid);
+  if (question.previewAnswer._id !== highestVotedAnswer._id) {
+    question.previewAnswer = shortAnswer;
+    questionService.saveQuestion(question, 'previewAnswer');
+  }
+  if (savedVote) {
+    return res.json({success: true, msg: 'Vote saved'});
+  }
+
+  return res.json({success: true, msg: 'I\'m not entirely sure if that vote saved...'});
 }
 
 const questionTextToURL = (text: string): string => {
