@@ -33,6 +33,19 @@ class VoteService {
     }
   }
 
+  public async removeVotes(answerID: string): Promise<number> {
+    try {
+      const removedVotes = await Vote.deleteMany({answerID: answerID});
+      if (removedVotes.deletedCount) {
+        return removedVotes.deletedCount;
+      }
+      return 0;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
+
   public async getAnswerVotesFromUser(questionID: string, userID: string): Promise<IVote[]> {
     try {
       const votes = await Vote.find({questionID: questionID, userID: userID});

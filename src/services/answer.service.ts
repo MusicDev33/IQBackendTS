@@ -55,10 +55,7 @@ class AnswerService {
       let query: any = {};
       query[param] = paramValue;
       let foundAnswers = await Answer.find(query).sort(sort).exec();
-      if (foundAnswers.length) {
-        return foundAnswers;
-      }
-      return null;
+      return foundAnswers;
     } catch (err) {
       console.log(err);
       return null;

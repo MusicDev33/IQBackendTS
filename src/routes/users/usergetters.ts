@@ -1,5 +1,6 @@
 import userService from '@services/user.service';
 import questionService from '@services/question.service';
+import answerService from '@services/answer.service';
 import { Request, Response } from 'express';
 
 export const getUserByParamRoute = async (req: Request, res: Response) => {
@@ -25,6 +26,14 @@ export const publicGetUserByHandleRoute = async (req: Request, res: Response) =>
     return res.json({success: true, user: foundUser});
   }
   return res.json({success: false, msg: 'Could not find user'});
+}
+
+export const getUserAnswersRoute = async (req: Request, res: Response) => {
+  const userAnswers = await answerService.findAnswersByParameter('posterID', req.params.userid);
+  if (userAnswers) {
+    return res.json({success: true, answers: userAnswers});
+  }
+  return res.json({success: false, msg: 'Could not find answers...'})
 }
 
 export const getUserQuestionsRoute = async (req: Request, res: Response) => {

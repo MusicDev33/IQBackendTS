@@ -1,5 +1,6 @@
 import questionService from '@services/question.service';
 import voteService from '@services/vote.service';
+import answerService from '@services/answer.service';
 import { Request, Response } from 'express';
 
 export const getQuestionByParamRoute = async (req: Request, res: Response) => {
@@ -16,6 +17,14 @@ export const getQuestionsByParamRoute = async (req: Request, res: Response) => {
     return res.json({success: true, questions: foundQuestions});
   }
   return res.json({success: false});
+}
+
+export const getQuestionAnswers = async (req: Request, res: Response) => {
+  const answers = answerService.findAnswersByParameter('questionID', req.params.questionid);
+  if (answers) {
+    return res.json({success: true, answers: answers});
+  }
+  return res.json({sucess: false, msg: 'Could not execute request to find answers...'});
 }
 
 export const getUserVotesRoute = async (req: Request, res: Response) => {
