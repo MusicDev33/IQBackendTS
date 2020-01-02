@@ -12,7 +12,7 @@ import path from 'path';
 
 import { dbConfig } from '@config/database';
 import { userPassportAuth } from '@config/passport';
-import { UserRoutes, QuestionRoutes, SubjectRoutes } from './config/routeDefs';
+import { UserRoutes, QuestionRoutes, SubjectRoutes, SourceRoutes } from './config/routeDefs';
 import { port, apiBase, acceptedAgents } from './config/constants';
 
 import { Request, RequestHandler, Response } from 'express';
@@ -75,6 +75,7 @@ app.use(checkAgent);
 app.use(apiBase + 'users', UserRoutes);
 app.use(apiBase + 'questions', QuestionRoutes);
 app.use(apiBase + 'subjects', SubjectRoutes);
+app.use(apiBase + 'sources', SourceRoutes);
 
 // create public folder with the index.html when finished
 app.use(express.static(path.join(__dirname, 'public')));
