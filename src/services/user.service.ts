@@ -95,6 +95,19 @@ class UserService {
       return {success: false, msg: err};
     }
   }
+
+  public async searchUserByParam(param: string, paramValue: string): Promise<IUser[]> {
+    try {
+      const regexp = '^' + paramValue;
+      let query: any = {};
+      query[param] = {$regex: regexp, $options: 'i'}
+      const users = User.find(query).lean().exec();
+      return users;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
 }
 
 const userService = UserService.getInstance();

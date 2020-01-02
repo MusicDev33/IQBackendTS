@@ -44,6 +44,21 @@ class SubjectService {
       return null;
     }
   }
+
+  public async searchSubjectByParam(param: string, paramValue: string): Promise<ISubject[]> {
+    try {
+      const regexp = '^' + paramValue;
+      let query: any = {};
+      query[param] = {$regex: regexp, $options: 'i'}
+      const subjects = Subject.find(query).lean().exec();
+      if (subjects) {
+        return subjects;
+      }
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
 }
 
 const subjectService = SubjectService.getInstance();

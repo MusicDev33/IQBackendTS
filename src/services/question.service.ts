@@ -74,6 +74,19 @@ class QuestionService {
       return 'Error - Insert error code here'
     }
   }
+
+  public async searchQuestionByParam(param: string, paramValue: string): Promise<IQuestion[]> {
+    try {
+      const regexp = '^' + paramValue;
+      let query: any = {};
+      query[param] = {$regex: regexp, $options: 'i'}
+      const questions = Question.find(query).lean().exec();
+      return questions;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
 }
 
 const questionService = QuestionService.getInstance();
