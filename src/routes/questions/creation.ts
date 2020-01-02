@@ -131,6 +131,26 @@ export const addVoteToAnswerRoute = async (req: Request, res: Response) => {
   return res.json({success: true, msg: 'I\'m not entirely sure if that vote saved...'});
 }
 
+export const editAnswerRoute = async (req: Request, res: Response) => {
+  const answer = await answerService.findOneAnswerByParameter('_id', req.params.answerid);
+  answer.answerText = req.body.newText;
+  const answerDidSave = await answerService.saveAnswer(answer, 'answerText');
+
+  const question = await questionService.findOneQuestionByParameter('_id', req.params.questionid);
+  if (question.previewAnswer && answer._id.equals(question.previewAnswer._id)) {
+    let newAnswer = question.previewAnswer
+    newAnswer.answerText = req.body.newText;
+    question.previewAnswer = newAnswer;
+    console.log(newAnswer)
+    await questionService.saveQuestion(question, 'previewAnswer');
+  }
+
+  if (answerDidSave) {
+    return res.json({success: true, answer: answerDidSave});
+  }
+  return res.json({success: false, msg: 'Could not save answer'});
+}
+
 const questionTextToURL = (text: string): string => {
   let urlText = ""
   const specialChars = "!@#$%^&*()>< '/\\"

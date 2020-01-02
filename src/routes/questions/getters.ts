@@ -20,7 +20,7 @@ export const getQuestionsByParamRoute = async (req: Request, res: Response) => {
 }
 
 export const getQuestionAnswers = async (req: Request, res: Response) => {
-  const answers = answerService.findAnswersByParameter('questionID', req.params.questionid);
+  const answers = await answerService.findAnswersByParameter('questionID', req.params.questionid, {votes: -1, _id: -1});
   if (answers) {
     return res.json({success: true, answers: answers});
   }
@@ -33,6 +33,14 @@ export const getUserVotesRoute = async (req: Request, res: Response) => {
     return res.json({success: true, votes: foundVotes});
   }
   return res.json({success: false, msg: 'Could not get votes from QuestionID'});
+}
+
+export const getAllQuestions = async (req: Request, res: Response) => {
+  const allQuestions = await questionService.getAllQuestions();
+  if (allQuestions) {
+    return res.json({success: true, questions: allQuestions});
+  }
+  return res.json({success: false, msg: 'Could not get all questions'})
 }
 
 export const getSitemapDataRoute = async (req: Request, res: Response) => {

@@ -14,7 +14,8 @@
           "@routes/*": ["routes/*"],
           "@config/*": ["config/*"],
           "@interfaces/*": ["interfaces/*"],
-          "@models/*": ["models/*"]
+          "@models/*": ["models/*"],
+          "@utils/*": ["utils/*"]
         },
     },
     "include": [

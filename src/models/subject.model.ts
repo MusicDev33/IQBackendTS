@@ -11,9 +11,9 @@ export interface ISubject extends Document {
 }
 
 const SubjectSchema: Schema = new Schema({
-  name: {type: String, required: true},
+  name: {type: String, required: true, unique: true},
   posterID: {type: String},
-  subjectURL: {type: String, required: true},
+  subjectURL: {type: String, required: true, unique: true},
   type: {type: String, required: true, default: 'subject'},
   followers: {type: Number},
   questions: {type: Number},

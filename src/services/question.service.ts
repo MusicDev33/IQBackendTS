@@ -15,7 +15,7 @@ class QuestionService {
 
   public async getAllQuestions(): Promise<IQuestion[]> {
     try {
-      const questions = await Question.find();
+      const questions = await Question.find().sort({_id: -1});
       return questions;
     } catch (err) {
       console.log(err);
