@@ -1,14 +1,5 @@
-import questionService from '@services/question.service';
-import editLogService from '@services/editlog.service';
-import userService from '@services/user.service';
-import answerService from '@services/answer.service';
-import voteService from '@services/vote.service';
 import subjectService from '@services/subject.service';
 import { Request, Response } from 'express';
-import { Question } from '@models/question.model';
-import { Answer } from '@models/answer.model';
-import { EditLog } from '@models/editlog.model';
-import { Vote } from '@models/vote.model';
 import { Subject } from '@models/subject.model';
 import { subjectNameToURL } from '@utils/string';
 
