@@ -32,7 +32,7 @@ const QuestionSchema: Schema = new Schema({
   votes: {type: Number, required: true, default: 0},
   answerNum: {type: Number, required: true, default: 0},
   tags: {type: Array, default: []},
-  homeworkSource: {type: Array, default: []},
+  homeworkSource: {type: [String], default: []},
   previewAnswer: {type: Object}
 }, {
   minimize: false
