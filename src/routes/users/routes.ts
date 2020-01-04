@@ -26,6 +26,7 @@ router.post('/authenticate', authLimit, RouteFunctions.authenticateUserRoute);
 router.post('/g/register', RouteFunctions.googleRegisterUserRoute);
 router.post('/g/authenticate', RouteFunctions.googleAuthUserRoute);
 
+router.get('/profile', passport.authenticate('jwt', {session: false}), RouteFunctions.getUserProfileRoute);
 router.get('/public/handle/:userhandle', RouteFunctions.publicGetUserByHandleRoute);
 router.get('/param/:qparam/:paramvalue', RouteFunctions.getUserByParamRoute);
 router.get('/:userid/answers', RouteFunctions.getUserAnswersRoute);
