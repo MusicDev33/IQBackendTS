@@ -73,6 +73,21 @@ class SourceService {
       return null;
     }
   }
+
+  public async saveSource(modifiedSource: ISource, changedParam: string): Promise<string> {
+    modifiedSource.markModified(changedParam);
+    try {
+      const savedSource = await modifiedSource.save();
+      if (savedSource) {
+        return 'Successfully changed parameter \'' + changedParam + '\'';
+      } else {
+        return 'Couldn\'t change param \'' + changedParam + '\' and it\'s totally our fault. Try again?';
+      }
+    } catch (err) {
+      console.log(err);
+      return 'Error - Insert error code here'
+    }
+  }
 }
 
 const sourceService = SourceService.getInstance();

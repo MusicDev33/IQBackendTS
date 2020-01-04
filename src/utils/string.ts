@@ -29,3 +29,19 @@ export const nameToURL = (subjectText: string): string => {
   }
   return urlText
 }
+
+export const urlToName = (url: string): string => {
+  let nameText = '';
+  const specialChars = '!@#$%^&*()>< \'';
+
+  for (let i = 0; i < url.length; i++) {
+    if (url[i] === '-') {
+      nameText += ' ';
+    } else if (specialChars.indexOf(url[i]) > -1) {
+      nameText += ''; // Basically do nothing.
+    } else {
+      nameText += url[i];
+    }
+  }
+  return nameText;
+}
