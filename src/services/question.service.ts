@@ -5,7 +5,7 @@ class QuestionService {
 
   private constructor() {}
 
-  static getInstance(): QuestionService {
+  public static getInstance(): QuestionService {
     if (!QuestionService.instance) {
       QuestionService.instance = new QuestionService();
     }
@@ -25,7 +25,7 @@ class QuestionService {
 
   public async addQuestion(newQuestion: IQuestion): Promise<IQuestion> {
     try {
-      let savedQuestion = await newQuestion.save();
+      const savedQuestion = await newQuestion.save();
       return savedQuestion;
     } catch (err) {
       console.log(err);
@@ -35,9 +35,9 @@ class QuestionService {
 
   public async findOneQuestionByParameter(param: string, paramValue: string): Promise<IQuestion> {
     try {
-      let query: any = {};
+      const query: any = {};
       query[param] = paramValue;
-      let foundQuestion = await Question.findOne(query).exec();
+      const foundQuestion = await Question.findOne(query).exec();
       return foundQuestion;
     } catch (err) {
       console.log(err);
@@ -47,9 +47,9 @@ class QuestionService {
 
   public async findQuestionsByParameter(param: string, paramValue: string, sort: any = {_id: 1}): Promise<IQuestion[]> {
     try {
-      let query: any = {};
+      const query: any = {};
       query[param] = paramValue;
-      let foundQuestions = await Question.find(query).sort(sort).exec();
+      const foundQuestions = await Question.find(query).sort(sort).exec();
       if (foundQuestions.length) {
         return foundQuestions;
       }
@@ -71,15 +71,15 @@ class QuestionService {
       }
     } catch (err) {
       console.log(err);
-      return 'Error - Insert error code here'
+      return 'Error - Insert error code here';
     }
   }
 
   public async searchQuestionByParam(param: string, paramValue: string): Promise<IQuestion[]> {
     try {
       const regexp = '^' + paramValue;
-      let query: any = {};
-      query[param] = {$regex: regexp, $options: 'i'}
+      const query: any = {};
+      query[param] = {$regex: regexp, $options: 'i'};
       const questions = Question.find(query).lean().exec();
       return questions;
     } catch (err) {

@@ -5,7 +5,7 @@ class SourceService {
 
   private constructor() {}
 
-  static getInstance(): SourceService {
+  public static getInstance(): SourceService {
     if (!SourceService.instance) {
       SourceService.instance = new SourceService();
     }
@@ -40,7 +40,7 @@ class SourceService {
   public async searchSourceByParam(param: string, paramValue: string): Promise<ISource[]> {
     try {
       const regexp = '^' + paramValue;
-      let query: any = {};
+      const query: any = {};
       query[param] = {$regex: regexp, $options: 'i'}
       const sources = Source.find(query).lean().exec();
       return sources;
@@ -52,9 +52,9 @@ class SourceService {
 
   public async findOneSourceByParameter(param: string, paramValue: string): Promise<ISource> {
     try {
-      let query: any = {};
+      const query: any = {};
       query[param] = paramValue;
-      let foundSource = await Source.findOne(query).exec();
+      const foundSource = await Source.findOne(query).exec();
       return foundSource;
     } catch (err) {
       console.log(err);
@@ -85,7 +85,7 @@ class SourceService {
       }
     } catch (err) {
       console.log(err);
-      return 'Error - Insert error code here'
+      return 'Error - Insert error code here';
     }
   }
 }

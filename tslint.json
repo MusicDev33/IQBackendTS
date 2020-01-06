@@ -11,7 +11,10 @@
         "curly": [true, "ignore-same-line"],
         "callable-types": [false],
         "no-string-literal": [false],
-        "max-line-length": [false]
+        "max-line-length": [false],
+        "ordered-imports": [false],
+        "member-ordering": [false],
+        "object-literal-sort-keys": [false]
     },
     "rulesDirectory": []
 }

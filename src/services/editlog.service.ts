@@ -5,7 +5,7 @@ class EditLogService {
 
   private constructor() {}
 
-  static getInstance(): EditLogService {
+  public static getInstance(): EditLogService {
     if (!EditLogService.instance) {
       EditLogService.instance = new EditLogService();
     }
