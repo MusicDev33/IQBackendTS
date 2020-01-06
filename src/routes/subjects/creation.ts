@@ -9,7 +9,7 @@ export const createSubjectRoute = async (req: Request, res: Response) => {
   }
 
   if (!req.params.subjectname.match(/^[a-zA-Z0-9\-']+$/g)) {
-    return res.json({success: false, msg: "Subject names are alphanumeric (and may contain dashes and apostrophes)"});
+    return res.json({success: false, msg: 'Subject names are alphanumeric (and may contain dashes and apostrophes)'});
   }
 
   // Still not sure what the cutoff should be
@@ -33,4 +33,4 @@ export const createSubjectRoute = async (req: Request, res: Response) => {
     return res.json({success: true, subject: savedSubject});
   }
   return res.json({success: false, msg: 'Could not add subject'});
-}
+};

@@ -11,9 +11,9 @@ export const setQuestionPropertyRoute = async (req: Request, res: Response) => {
 
     // Ugh...more if statements...
     if (savedQuestion) {
-      return res.json({success: true, msg: 'Successfully edited question!'})
+      return res.json({success: true, msg: 'Successfully edited question!'});
     }
-    return res.json({success: false, msg: 'Edited question. Could not save it. Call 911.'})
+    return res.json({success: false, msg: 'Edited question. Could not save it. Call 911.'});
   }
   return res.json({success: false, msg: 'Could not edit question!'});
-}
+};

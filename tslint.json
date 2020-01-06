@@ -15,7 +15,8 @@
         "ordered-imports": [false],
         "member-ordering": [false],
         "object-literal-sort-keys": [false],
-        "object-literal-shorthand": [false]
+        "object-literal-shorthand": [false],
+        "arrow-parens": [false]
     },
     "rulesDirectory": []
 }

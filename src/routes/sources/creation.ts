@@ -5,7 +5,7 @@ import { nameToURL } from '@utils/string';
 
 export const addSourceRoute = async (req: Request, res: Response): Promise<Response> => {
   if (!req.body.name.match(/^[a-zA-Z0-9\-' ]+$/g)) {
-    return res.json({success: false, msg: 'Source names are alphanumeric (and may contain dashes and apostrophes)'})
+    return res.json({success: false, msg: 'Source names are alphanumeric (and may contain dashes and apostrophes)'});
   }
 
   const newSource = new Source({
@@ -24,5 +24,5 @@ export const addSourceRoute = async (req: Request, res: Response): Promise<Respo
   if (savedSource) {
     return res.json({success: true, source: savedSource});
   }
-  return res.json({success:false, msg: 'Could not add source.'});
-}
+  return res.json({success: false, msg: 'Could not add source.'});
+};

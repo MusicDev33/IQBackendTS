@@ -4,16 +4,15 @@ import { dbConfig } from '@config/database';
 import { User } from '@models/user.model';
 import UserController from '@services/user.controller';
 import { Request, Response } from 'express';
-import IControllerResponse from '@interfaces/IControllerResponse';
 
 const userController = UserController.getInstance();
 
 export const googleRegisterUserRoute = async (req: Request, res: Response) => {
-  if (req.body.handle.indexOf(' ') >= 0 || !req.body.handle.match(/^[a-z0-9_]+$/g)){
+  if (req.body.handle.indexOf(' ') >= 0 || !req.body.handle.match(/^[a-z0-9_]+$/g)) {
     return res.json({success: false, msg: "You can't have special characters in your handle. Letters must be lowercase."});
   }
 
-  let newUser = new User({
+  const newUser = new User({
     fbTokens: [],
     name: req.body.name,
     email: req.body.email.toLowerCase(),
@@ -32,7 +31,7 @@ export const googleRegisterUserRoute = async (req: Request, res: Response) => {
 
   const addUserResult = await userController.addGoogleUser(newUser);
   return res.json(addUserResult);
-}
+};
 
 export const googleAuthUserRoute = async (req: Request, res: Response) => {
   const findUserResult = await userController.findOneUserByParameter('googleID', req.body.googleID);
@@ -44,4 +43,4 @@ export const googleAuthUserRoute = async (req: Request, res: Response) => {
   } else {
     res.json(findUserResult);
   }
-}
+};

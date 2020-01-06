@@ -8,7 +8,7 @@ export const getAllSourcesRoute = async (req: Request, res: Response) => {
     return res.json({success: true, subjects: allSources});
   }
   return res.json({success: false, msg: 'Couldn\'t find any subjects'});
-}
+};
 
 export const getQuestionsFromSourceRoute = async (req: Request, res: Response) => {
   const source = await sourceService.findOneSourceByParameter('_id', req.params.sourceid);
@@ -18,7 +18,7 @@ export const getQuestionsFromSourceRoute = async (req: Request, res: Response) =
     return res.json({success: true, questions: questions});
   }
   return res.json({success: false, msg: 'Could not find questions from source...'});
-}
+};
 
 export const getSourceByURLRoute = async (req: Request, res: Response) => {
   const source = await sourceService.findOneSourceByParameter('sourceURL', req.params.sourceurl);
@@ -26,4 +26,4 @@ export const getSourceByURLRoute = async (req: Request, res: Response) => {
     return res.json({success: true, source: source});
   }
   return res.json({success: false, msg: 'Couldn\'t find source by url...'});
-}
+};

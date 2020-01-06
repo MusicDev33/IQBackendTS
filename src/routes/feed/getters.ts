@@ -7,4 +7,4 @@ export const getUserFeedRoute = async (req: Request, res: Response) => {
     return res.status(200).json({success: true, feed: questions});
   }
   return res.status(404).json({success: false, msg: 'Could not return feed'});
-}
+};

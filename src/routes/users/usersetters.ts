@@ -1,7 +1,5 @@
-import { User } from '@models/user.model';
 import UserController from '@services/user.controller';
 import { Request, Response } from 'express';
-import IControllerResponse from '@interfaces/IControllerResponse';
 
 const userController = UserController.getInstance();
 
@@ -22,4 +20,4 @@ export const setUserPropertyRoute = async (req: Request, res: Response) => {
   } else {
     return res.json(foundUserResult);
   }
-}
+};

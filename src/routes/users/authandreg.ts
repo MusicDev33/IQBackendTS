@@ -10,18 +10,18 @@ const userController = UserController.getInstance();
 
 export const registerUserRoute = (req: Request, res: Response) => {
   if (!validateRegister(req.body)) {
-    return res.json({success: false, msg: 'You probably filled out a form incorrectly.'})
+    return res.json({success: false, msg: 'You probably filled out a form incorrectly.'});
   }
 
-  let newUser = new User({
+  const newUser = new User({
     fbTokens: [],
-    name: req.body.firstName + " " + req.body.lastName,
+    name: req.body.firstName + ' ' + req.body.lastName,
     email: req.body.email.toLowerCase(),
     handle: req.body.handle,
     phoneNumber: req.body.phoneNumber,
     password: req.body.password,
-    bio: "",
-    profileImage: "",
+    bio: '',
+    profileImage: '',
     customization: {},
     currentSubjects: [],
     currentSources: [],
@@ -33,10 +33,10 @@ export const registerUserRoute = (req: Request, res: Response) => {
   userController.addUser(newUser).then((result: IControllerResponse) => {
     let response = {};
     if (result.msg) { response = {success: result.success, msg: result.msg}; }
-    console.log(response)
+    console.log(response);
     return res.json(response);
   });
-}
+};
 
 export const authenticateUserRoute = async (req: Request, res: Response) => {
   const login = req.body.login.toLowerCase();
@@ -64,9 +64,9 @@ export const authenticateUserRoute = async (req: Request, res: Response) => {
       const jwtToken = jwt.sign(user.toJSON(), dbConfig.secret, {expiresIn: 28800}); // Expires in 8 hours
       return res.json({success: true, token: 'JWT ' + jwtToken, user: user});
     } else {
-      res.json({success: false, msg: 'Wrong password!'})
+      res.json({success: false, msg: 'Wrong password!'});
     }
   } else {
     res.json(userResponse);
   }
-}
+};

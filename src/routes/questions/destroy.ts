@@ -13,5 +13,5 @@ export const deleteAnswerRoute = async (req: Request, res: Response) => {
     await voteService.removeVotes(req.params.answerid);
     return res.json({success: true, msg: 'Answer deleted.', answer: removedAnswer});
   }
-  return res.json({success: false, msg: 'Could not remove answer. Contact the site owner at 208-631-0704 and tell him he\'s doing a bad job.'})
-}
+  return res.json({success: false, msg: 'Could not remove answer. Contact the site owner at 208-631-0704 and tell him he\'s doing a bad job.'});
+};

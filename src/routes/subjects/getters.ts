@@ -10,7 +10,7 @@ export const getSubjectQuestionsRoute = async (req: Request, res: Response) => {
     return res.json({success: true, questions: questions});
   }
   return res.json({success: false, msg: 'Could not find questions by subject'});
-}
+};
 
 export const getAllSubjectsRoute = async (req: Request, res: Response) => {
   const allSubjects = await subjectService.getAllSubjects();
@@ -18,4 +18,4 @@ export const getAllSubjectsRoute = async (req: Request, res: Response) => {
     return res.json({success: true, subjects: allSubjects});
   }
   return res.json({success: false, msg: 'Couldn\'t find any subjects'});
-}
+};

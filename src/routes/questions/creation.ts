@@ -10,7 +10,7 @@ import { EditLog } from '@models/editlog.model';
 import { Vote } from '@models/vote.model';
 
 export const addQuestionRoute = async (req: Request, res: Response) => {
-  let newQuestion = new Question({
+  const newQuestion = new Question({
     answers: [],
     questionText: req.body.question,
     urlText: questionTextToURL(req.body.question),
@@ -45,7 +45,7 @@ export const addQuestionRoute = async (req: Request, res: Response) => {
   } else {
     return res.json({success: false, msg: 'Could not add question...'});
   }
-}
+};
 
 // UNFINISHED ROUTE - Probably doesn't quite work
 export const addAnswerToQuestionRoute = async (req: Request, res: Response) => {
@@ -68,7 +68,7 @@ export const addAnswerToQuestionRoute = async (req: Request, res: Response) => {
     poster: req.body.poster,
     posterID: req.body.posterID,
     posterHandle: req.body.posterHandle
-  }
+  };
 
   const foundQuestion = await questionService.findOneQuestionByParameter('_id', req.params.questionid);
   const numAnswers = foundQuestion.answerNum;
@@ -82,10 +82,10 @@ export const addAnswerToQuestionRoute = async (req: Request, res: Response) => {
       foundQuestion.previewAnswer = shortAnswer;
       questionService.saveQuestion(foundQuestion, 'previewAnswer');
     }
-    return res.json({success: true, msg: 'Answer most likely got saved!', answer: savedAnswer})
+    return res.json({success: true, msg: 'Answer most likely got saved!', answer: savedAnswer});
   }
-  return res.json({success: false, msg: 'Answer wasn\'t saved, and it was our fault...'})
-}
+  return res.json({success: false, msg: 'Answer wasn\'t saved, and it was our fault...'});
+};
 
 export const addVoteToAnswerRoute = async (req: Request, res: Response) => {
   const oldVote = await voteService.removeVote(req.params.answerid, req.params.userid);
@@ -117,7 +117,7 @@ export const addVoteToAnswerRoute = async (req: Request, res: Response) => {
     poster: highestVotedAnswer.poster,
     posterID: highestVotedAnswer.posterID,
     posterHandle: highestVotedAnswer.posterHandle
-  }
+  };
 
   const question = await questionService.findOneQuestionByParameter('_id', req.params.questionid);
   if (question.previewAnswer._id !== highestVotedAnswer._id) {
@@ -129,7 +129,7 @@ export const addVoteToAnswerRoute = async (req: Request, res: Response) => {
   }
 
   return res.json({success: true, msg: 'I\'m not entirely sure if that vote saved...'});
-}
+};
 
 export const editAnswerRoute = async (req: Request, res: Response) => {
   const answer = await answerService.findOneAnswerByParameter('_id', req.params.answerid);
@@ -138,10 +138,10 @@ export const editAnswerRoute = async (req: Request, res: Response) => {
 
   const question = await questionService.findOneQuestionByParameter('_id', req.params.questionid);
   if (question.previewAnswer && answer._id.equals(question.previewAnswer._id)) {
-    let newAnswer = question.previewAnswer
+    const newAnswer = question.previewAnswer;
     newAnswer.answerText = req.body.newText;
     question.previewAnswer = newAnswer;
-    console.log(newAnswer)
+    console.log(newAnswer);
     await questionService.saveQuestion(question, 'previewAnswer');
   }
 
@@ -149,20 +149,20 @@ export const editAnswerRoute = async (req: Request, res: Response) => {
     return res.json({success: true, answer: answerDidSave});
   }
   return res.json({success: false, msg: 'Could not save answer'});
-}
+};
 
 const questionTextToURL = (text: string): string => {
-  let urlText = ""
-  const specialChars = "!@#$%^&*()>< '/\\"
+  let urlText = '';
+  const specialChars = "!@#$%^&*()>< '/\\";
 
   for (let i = 0; i < text.length; i++) {
-    if (specialChars.indexOf(text[i]) > -1){
-      urlText += "-"
-    } else if (text[i] == "?") {
-
+    if (specialChars.indexOf(text[i]) > -1) {
+      urlText += '-';
+    } else if (text[i] === '?') {
+      console.log('line 162, questions/creation.ts');
     } else {
-      urlText += text[i]
+      urlText += text[i];
     }
   }
-  return urlText
-}
+  return urlText;
+};
