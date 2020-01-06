@@ -14,7 +14,8 @@
         "max-line-length": [false],
         "ordered-imports": [false],
         "member-ordering": [false],
-        "object-literal-sort-keys": [false]
+        "object-literal-sort-keys": [false],
+        "object-literal-shorthand": [false]
     },
     "rulesDirectory": []
 }

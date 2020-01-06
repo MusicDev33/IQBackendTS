@@ -3,3 +3,6 @@ const router = express.Router();
 import * as RouteFunctions from './route.controller';
 
 router.post('/add', RouteFunctions.addFeedbackRoute);
+
+const FeedbackRoutes = router;
+export default FeedbackRoutes;

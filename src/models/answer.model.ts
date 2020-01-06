@@ -12,7 +12,7 @@ export interface IAnswer extends Document {
   type: string;
   views: number;
   votes: number;
-  comments: Array<any>;
+  comments: any[];
 }
 
 const AnswerSchema: Schema = new Schema({

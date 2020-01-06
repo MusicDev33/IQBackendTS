@@ -10,7 +10,7 @@ export interface ISource extends Document {
   followers: number;
   questions: number;
   edition: number;
-  tags: Array<string>;
+  tags: string[];
 }
 
 const SourceSchema: Schema = new Schema({

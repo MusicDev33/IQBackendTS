@@ -13,8 +13,8 @@ export interface IQuestion extends Document {
   views: number;
   votes: number;
   answerNum: number;
-  tags: Array<string>;
-  homeworkSource: Array<string>;
+  tags: string[];
+  homeworkSource: string[];
   previewAnswer: any;
 }
 

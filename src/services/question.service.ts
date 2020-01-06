@@ -75,7 +75,7 @@ class QuestionService {
     }
   }
 
-  public async searchQuestionByParam(param: string, paramValue: string): Promise<IQuestion[]> {
+  public async searchQuestionsByParam(param: string, paramValue: string): Promise<IQuestion[]> {
     try {
       const regexp = '^' + paramValue;
       const query: any = {};

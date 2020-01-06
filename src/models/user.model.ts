@@ -14,9 +14,9 @@ export interface IUser extends Document {
   credentials: any;
   profileHits: number;
   paidProgram: boolean;
-  fbTokens: Array<string>;
-  currentSources: Array<any>;
-  currentSubjects: Array<any>;
+  fbTokens: string[];
+  currentSources: string[];
+  currentSubjects: string[];
 }
 
 const UserSchema: Schema = new Schema({
