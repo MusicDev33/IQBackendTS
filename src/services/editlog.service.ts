@@ -1,9 +1,12 @@
 import { EditLog, IEditLog } from '@models/editlog.model';
+import { EntityService } from '@classes/EntityService';
 
-class EditLogService {
+class EditLogService extends EntityService<IEditLog> {
   private static instance: EditLogService;
 
-  private constructor() {}
+  private constructor() {
+    super();
+  }
 
   public static getInstance(): EditLogService {
     if (!EditLogService.instance) {
@@ -11,20 +14,6 @@ class EditLogService {
     }
 
     return EditLogService.instance;
-  }
-
-  public async addEditLog(newEditLog: IEditLog): Promise<IEditLog> {
-    try {
-      const savedEditLog = await newEditLog.save();
-      if (savedEditLog) {
-        return savedEditLog;
-      } else {
-        return null;
-      }
-    } catch (err) {
-      console.log(err);
-      return null;
-    }
   }
 }
 

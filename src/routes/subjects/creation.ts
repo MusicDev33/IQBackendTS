@@ -28,7 +28,7 @@ export const createSubjectRoute = async (req: Request, res: Response) => {
     views: 0
   });
 
-  const savedSubject = await subjectService.addSubject(newSubject);
+  const savedSubject = await subjectService.saveModel(newSubject);
   if (savedSubject) {
     return res.json({success: true, subject: savedSubject});
   }

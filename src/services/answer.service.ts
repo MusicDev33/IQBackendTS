@@ -1,26 +1,19 @@
 import { Answer, IAnswer } from '@models/answer.model';
+import { EntityService } from '@classes/EntityService';
 
-class AnswerService {
+class AnswerService extends EntityService<IAnswer> {
   private static instance: AnswerService;
 
-  private constructor() {}
+  private constructor() {
+    super();
+  }
 
-  static getInstance(): AnswerService {
+  public static getInstance(): AnswerService {
     if (!AnswerService.instance) {
       AnswerService.instance = new AnswerService();
     }
 
     return AnswerService.instance;
-  }
-
-  public async addAnswer(newAnswer: IAnswer): Promise<IAnswer> {
-    try {
-      const savedAnswer = await newAnswer.save();
-      return savedAnswer;
-    } catch (err) {
-      console.log(err);
-      return null;
-    }
   }
 
   public async saveAnswer(changedAnswer: IAnswer, changedParam: string): Promise<string> {
@@ -34,7 +27,7 @@ class AnswerService {
       }
     } catch (err) {
       console.log(err);
-      return 'Error - Insert error code here'
+      return 'Error - Insert error code here';
     }
   }
 

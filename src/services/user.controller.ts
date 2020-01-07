@@ -8,7 +8,7 @@ export default class UserController {
 
   private constructor() {}
 
-  static getInstance(): UserController {
+  public static getInstance(): UserController {
     if (!UserController.instance) {
       UserController.instance = new UserController();
     }
@@ -18,15 +18,15 @@ export default class UserController {
 
   public async addUser(newUser: IUser): Promise<IControllerResponse> {
     try {
-      let existingUsers = await User.find( { $or: [{'email': newUser.email}, {'handle': newUser.handle}]} ).exec();
+      const existingUsers = await User.find( { $or: [{email: newUser.email}, {handle: newUser.handle}]} ).exec();
       if (existingUsers.length) {
         return {success: false, msg: 'Error - Try another handle or email'};
       }
-      let salt = await bcryptjs.genSalt(13);
-      let hashedPassword = await bcryptjs.hash(newUser.password, salt);
+      const salt = await bcryptjs.genSalt(13);
+      const hashedPassword = await bcryptjs.hash(newUser.password, salt);
       newUser.password = hashedPassword;
 
-      let savedUser = await newUser.save();
+      const savedUser = await newUser.save();
       if (savedUser) {
         return {success: true, msg: 'Successfully registered user!'};
       } else {
@@ -40,12 +40,12 @@ export default class UserController {
 
   public async addGoogleUser(newUser: IUser): Promise<IControllerResponse> {
     try {
-      let existingUsers = await User.find( { $or: [{'email': newUser.email}, {'handle': newUser.handle}]} ).exec();
+      const existingUsers = await User.find( { $or: [{'email': newUser.email}, {'handle': newUser.handle}]} ).exec();
       if (existingUsers.length) {
         return {success: false, msg: 'Error - Try another handle or email'};
       }
 
-      let savedUser = await newUser.save();
+      const savedUser = await newUser.save();
       if (savedUser) {
         return {success: true, msg: 'Successfully registered user!'};
       } else {
@@ -68,9 +68,9 @@ export default class UserController {
 
   public async findOneUserByParameter(param: string, paramValue: string): Promise<IControllerResponse> {
     try {
-      let query: any = {};
+      const query: any = {};
       query[param] = paramValue;
-      let foundUser = await User.findOne(query).exec();
+      const foundUser = await User.findOne(query).exec();
       if (foundUser) {
         return {success: true, payload: foundUser};
       } else {

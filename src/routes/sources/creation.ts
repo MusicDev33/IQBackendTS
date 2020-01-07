@@ -20,7 +20,7 @@ export const addSourceRoute = async (req: Request, res: Response): Promise<Respo
     isbn: req.body.isbn ? req.body.isbn : ''
   });
 
-  const savedSource = await sourceService.addSource(newSource);
+  const savedSource = await sourceService.saveModel(newSource);
   if (savedSource) {
     return res.json({success: true, source: savedSource});
   }

@@ -1,4 +1,4 @@
-interface IControllerResponse{
+interface IControllerResponse {
   success: boolean;
   payload?: any;
   msg?: string;

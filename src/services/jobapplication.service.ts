@@ -1,11 +1,14 @@
 import { JobApplication, IJobApplication } from '@models/jobapplication.model';
+import { EntityService } from '@classes/EntityService';
 
-class JobApplicationService {
+class JobApplicationService extends EntityService<IJobApplication> {
   private static instance: JobApplicationService;
 
-  private constructor() {}
+  private constructor() {
+    super();
+  }
 
-  static getInstance(): JobApplicationService {
+  public static getInstance(): JobApplicationService {
     if (!JobApplicationService.instance) {
       JobApplicationService.instance = new JobApplicationService();
     }

@@ -8,7 +8,7 @@ class UserService {
 
   private constructor() {}
 
-  static getInstance(): UserService {
+  public static getInstance(): UserService {
     if (!UserService.instance) {
       UserService.instance = new UserService();
     }
@@ -18,15 +18,15 @@ class UserService {
 
   public async addUser(newUser: IUser): Promise<IControllerResponse> {
     try {
-      let existingUsers = await User.find( { $or: [{'email': newUser.email}, {'handle': newUser.handle}]} ).exec();
+      const existingUsers = await User.find( { $or: [{email: newUser.email}, {handle: newUser.handle}]} ).exec();
       if (existingUsers.length) {
         return {success: false, msg: 'Error - Try another handle or email'};
       }
-      let salt = await bcryptjs.genSalt(13);
-      let hashedPassword = await bcryptjs.hash(newUser.password, salt);
+      const salt = await bcryptjs.genSalt(13);
+      const hashedPassword = await bcryptjs.hash(newUser.password, salt);
       newUser.password = hashedPassword;
 
-      let savedUser = await newUser.save();
+      const savedUser = await newUser.save();
       if (savedUser) {
         return {success: true, msg: 'Successfully registered user!'};
       } else {
@@ -40,12 +40,12 @@ class UserService {
 
   public async addGoogleUser(newUser: IUser): Promise<IControllerResponse> {
     try {
-      let existingUsers = await User.find( { $or: [{'email': newUser.email}, {'handle': newUser.handle}]} ).exec();
+      const existingUsers = await User.find( { $or: [{email: newUser.email}, {handle: newUser.handle}]} ).exec();
       if (existingUsers.length) {
         return {success: false, msg: 'Error - Try another handle or email'};
       }
 
-      let savedUser = await newUser.save();
+      const savedUser = await newUser.save();
       if (savedUser) {
         return {success: true, msg: 'Successfully registered user!'};
       } else {

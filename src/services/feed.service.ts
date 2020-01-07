@@ -6,7 +6,7 @@ class FeedService {
 
   private constructor() {}
 
-  static getInstance(): FeedService {
+  public static getInstance(): FeedService {
     if (!FeedService.instance) {
       FeedService.instance = new FeedService();
     }

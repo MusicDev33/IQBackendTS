@@ -10,7 +10,7 @@ export const addFeedbackRoute = async (req: Request, res: Response) => {
     type: req.body.type
   });
 
-  const savedFeedback = await feedbackService.addFeedback(newFeedback);
+  const savedFeedback = await feedbackService.saveModel(newFeedback);
   if (savedFeedback) {
     return res.status(200).json({success: true, msg: 'Thanks for your feedback!'});
   }

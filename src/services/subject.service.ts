@@ -1,11 +1,14 @@
 import { Subject, ISubject } from '@models/subject.model';
+import { EntityService } from '@classes/EntityService';
 
-class SubjectService {
+class SubjectService extends EntityService<ISubject> {
   private static instance: SubjectService;
 
-  private constructor() {}
+  private constructor() {
+    super();
+  }
 
-  static getInstance(): SubjectService {
+  public static getInstance(): SubjectService {
     if (!SubjectService.instance) {
       SubjectService.instance = new SubjectService();
     }

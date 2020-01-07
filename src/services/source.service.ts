@@ -1,9 +1,12 @@
 import { Source, ISource } from '@models/source.model';
+import { EntityService } from '@classes/EntityService';
 
-class SourceService {
+class SourceService extends EntityService<ISource> {
   private static instance: SourceService;
 
-  private constructor() {}
+  private constructor() {
+    super();
+  }
 
   public static getInstance(): SourceService {
     if (!SourceService.instance) {

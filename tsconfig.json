@@ -16,7 +16,8 @@
           "@config/*": ["config/*"],
           "@interfaces/*": ["interfaces/*"],
           "@models/*": ["models/*"],
-          "@utils/*": ["utils/*"]
+          "@utils/*": ["utils/*"],
+          "@classes/*": ["classes/*"]
         },
     },
     "include": [

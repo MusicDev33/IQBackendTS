@@ -1,9 +1,12 @@
 import { Question, IQuestion } from '@models/question.model';
+import { EntityService } from '@classes/EntityService';
 
-class QuestionService {
+class QuestionService extends EntityService<IQuestion> {
   private static instance: QuestionService;
 
-  private constructor() {}
+  private constructor() {
+    super();
+  }
 
   public static getInstance(): QuestionService {
     if (!QuestionService.instance) {

@@ -37,7 +37,7 @@ export const addQuestionRoute = async (req: Request, res: Response) => {
       editType: 'question',
       paidContent: user.paidProgram
     });
-    const savedEditLog = await editLogService.addEditLog(newEditLog);
+    const savedEditLog = await editLogService.saveModel(newEditLog);
     if (!savedEditLog) {
       console.log('Edit Log for QuestionID ' + savedQuestion._id + ' could not be saved.');
     }
@@ -72,7 +72,7 @@ export const addAnswerToQuestionRoute = async (req: Request, res: Response) => {
 
   const foundQuestion = await questionService.findOneQuestionByParameter('_id', req.params.questionid);
   const numAnswers = foundQuestion.answerNum;
-  const savedAnswer = await answerService.addAnswer(newAnswer);
+  const savedAnswer = await answerService.saveModel(newAnswer);
   if (savedAnswer) {
     shortAnswer['_id'] = savedAnswer._id;
     foundQuestion.answerNum += 1;
@@ -95,7 +95,7 @@ export const addVoteToAnswerRoute = async (req: Request, res: Response) => {
     userID: req.params.userid,
     vote: req.body.vote
   });
-  const savedVote = await voteService.addVote(newVote);
+  const savedVote = await voteService.saveModel(newVote);
   const answer = await answerService.findOneAnswerByParameter('_id', req.params.answerid);
   if (oldVote) {
     answer.votes -= oldVote.vote;

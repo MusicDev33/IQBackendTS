@@ -1,11 +1,14 @@
 import { Vote, IVote } from '@models/vote.model';
+import { EntityService } from '@classes/EntityService';
 
-class VoteService {
+class VoteService extends EntityService<IVote> {
   private static instance: VoteService;
 
-  private constructor() {}
+  private constructor() {
+    super();
+  }
 
-  static getInstance(): VoteService {
+  public static getInstance(): VoteService {
     if (!VoteService.instance) {
       VoteService.instance = new VoteService();
     }

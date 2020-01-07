@@ -1,11 +1,14 @@
 import { Feedback, IFeedback } from '@models/feedback.model';
+import { EntityService } from '@classes/EntityService';
 
-class FeedbackService {
+class FeedbackService extends EntityService<IFeedback> {
   private static instance: FeedbackService;
 
-  private constructor() {}
+  private constructor() {
+    super();
+  }
 
-  static getInstance(): FeedbackService {
+  public static getInstance(): FeedbackService {
     if (!FeedbackService.instance) {
       FeedbackService.instance = new FeedbackService();
     }
