@@ -9,6 +9,7 @@ export interface IUser extends Document {
   password: string;
   type: string;
   googleID: string;
+  profileImage: string;
   customization: any;
   knowledge: any;
   credentials: any;
@@ -26,6 +27,7 @@ const UserSchema: Schema = new Schema({
   handle: {type: String, required: true, unique: true},
   phoneNumber: {type: String},
   password: {type: String},
+  profileImage: {type: String},
   type: {type: String, default: 'user'},
   customization: {type: Object},
   currentSources: {type: Array},
