@@ -53,7 +53,7 @@ class QuestionService extends EntityService<IQuestion> {
       const query: any = {};
       query[param] = paramValue;
       const foundQuestions = await Question.find(query).sort(sort).exec();
-      if (foundQuestions.length) {
+      if (foundQuestions) {
         return foundQuestions;
       }
       return null;
