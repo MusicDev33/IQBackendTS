@@ -16,7 +16,7 @@ export interface ISource extends Document {
 const SourceSchema: Schema = new Schema({
   name: {type: String, required: true},
   author: {type: String},
-  isbn: {type: String, unique: true},
+  isbn: {type: String},
   posterID: {type: String, required: true},
   sourceURL: {type: String, required: true, unique: true},
   type: {type: String, required: true, default: 'source'},
