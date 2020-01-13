@@ -19,3 +19,11 @@ export const getAllSubjectsRoute = async (req: Request, res: Response) => {
   }
   return res.json({success: false, msg: 'Couldn\'t find any subjects'});
 };
+
+export const getSubjectRoute = async (req: Request, res: Response) => {
+  const subject = await subjectService.findOneSubjectByParameter('subjectURL', req.params.subjecturl);
+  if (subject) {
+    return res.json({success: true, subject: subject});
+  }
+  return res.json({sucess: false, msg: 'Could not get subject by URL...'});
+};
