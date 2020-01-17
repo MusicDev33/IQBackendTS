@@ -18,11 +18,13 @@ class FeedService {
   public async getUserFeed(userID: string): Promise<IQuestion[]> {
     try {
       const user = await User.findById(userID).exec();
+      let questions: IQuestion[];
       if (user.currentSubjects.length) {
-        const questions = await Question.find({subject: {$in: user.currentSubjects}}).sort({_id: -1}).limit(30).exec();
+        questions = await Question.find({subject: {$in: user.currentSubjects}}).sort({_id: -1}).limit(30).exec();
         return questions;
       }
-      return null;
+      questions = await Question.find({}).sort({_id: -1}).limit(30).exec();
+      return questions;
     } catch (err) {
       console.log(err);
       return null;
