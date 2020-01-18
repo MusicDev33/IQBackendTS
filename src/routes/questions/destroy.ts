@@ -10,6 +10,10 @@ export const deleteAnswerRoute = async (req: Request, res: Response) => {
   if (removedAnswer) {
     question.answerNum -= 1;
     await questionService.saveQuestion(question, 'answerNum');
+    if (question.previewAnswer._id && question.previewAnswer._id === removedAnswer._id) {
+      question.previewAnswer = {};
+      await questionService.saveQuestion(question, 'previewAnswer');
+    }
     await voteService.removeVotes(req.params.answerid);
     return res.json({success: true, msg: 'Answer deleted.', answer: removedAnswer});
   }
