@@ -10,7 +10,7 @@ export const deleteAnswerRoute = async (req: Request, res: Response) => {
   if (removedAnswer) {
     question.answerNum -= 1;
     await questionService.saveQuestion(question, 'answerNum');
-    if (question.previewAnswer._id && question.previewAnswer._id === removedAnswer._id) {
+    if (question.previewAnswer.posterHandle && question.previewAnswer.posterHandle === removedAnswer.posterHandle) {
       question.previewAnswer = {};
       await questionService.saveQuestion(question, 'previewAnswer');
     }
