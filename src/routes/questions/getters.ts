@@ -35,6 +35,14 @@ export const getUserVotesRoute = async (req: Request, res: Response) => {
   return res.json({success: false, msg: 'Could not get votes from QuestionID'});
 };
 
+export const getHotQuestions = async (req: Request, res: Response) => {
+  const hotQuestions = await questionService.getHotQuestions();
+  if (hotQuestions) {
+    return res.json({success: true, questions: hotQuestions});
+  }
+  return res.json({success: false, msg: 'Could not get trending questions...'});
+};
+
 export const getAllQuestions = async (req: Request, res: Response) => {
   const allQuestions = await questionService.getAllQuestions();
   if (allQuestions) {

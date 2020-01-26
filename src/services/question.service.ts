@@ -90,6 +90,16 @@ class QuestionService extends EntityService<IQuestion> {
       return null;
     }
   }
+
+  public async getHotQuestions(): Promise<IQuestion[]> {
+    try {
+      const hotQuestions = Question.find().sort({'previewAnswer.votes': -1}).limit(4).exec();
+      return hotQuestions;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
 }
 
 const questionService = QuestionService.getInstance();

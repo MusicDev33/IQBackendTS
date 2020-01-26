@@ -64,6 +64,16 @@ class AnswerService extends EntityService<IAnswer> {
       return null;
     }
   }
+
+  public async getHotAnswers(): Promise<IAnswer[]> {
+    try {
+      const hotAnswers = await Answer.find().sort({_id: -1, votes: -1}).limit(4).exec();
+      return hotAnswers;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
 }
 
 const answerService = AnswerService.getInstance();
