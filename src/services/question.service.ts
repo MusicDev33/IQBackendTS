@@ -93,7 +93,7 @@ class QuestionService extends EntityService<IQuestion> {
 
   public async getHotQuestions(): Promise<IQuestion[]> {
     try {
-      const hotQuestions = Question.find().sort({'previewAnswer.votes': 1}).limit(4).exec();
+      const hotQuestions = Question.find({'previewAnswer.votes': {$exists: true}}).sort({'previewAnswer.votes': -1}).limit(4).exec();
       return hotQuestions;
     } catch (err) {
       console.log(err);
