@@ -10,6 +10,10 @@ import mongoose from 'mongoose';
 import passport from 'passport';
 import path from 'path';
 
+import { S3, Endpoint } from 'aws-sdk';
+import multer from 'multer';
+import multerS3 from 'multer-s3';
+
 import { dbConfig } from '@config/database';
 import { userPassportAuth } from '@config/passport';
 import { UserRoutes, QuestionRoutes, SubjectRoutes, SourceRoutes, FeedRoutes, FeedbackRoutes, SearchRoutes } from './config/routeDefs';
@@ -80,11 +84,41 @@ app.use(apiBase + 'feed', FeedRoutes);
 app.use(apiBase + 'feedback', FeedbackRoutes);
 app.use(apiBase + 'search', SearchRoutes);
 
+// AWS Setup
+const spacesEndpoint = new Endpoint('sfo2.digitaloceanspaces.com');
+const s3 = new S3({
+  endpoint: 'sfo2.digitaloceanspaces.com'
+});
+
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'iqcdn1',
+    acl: 'public-read',
+    key: (request, file, cb) => {
+      console.log(file);
+      const date = '' + Date.now();
+      cb(null, date + Math.floor(Math.random() * 1000));
+    }
+  })
+}).array('upload', 1);
+
 // create public folder with the index.html when finished
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get(apiBase + '/', (req, res) => {
   res.status(404).send('404 Error');
+});
+
+app.post('/upload', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+  upload(req, res, (error) => {
+    if (error) {
+      console.log(error);
+      res.status(500).send('Could not upload file!');
+    }
+    console.log('File uploaded successfully.');
+    res.status(200).send('File uploaded successfully');
+  });
 });
 
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'DEVTEST') {
