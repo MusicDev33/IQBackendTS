@@ -110,7 +110,7 @@ app.get(apiBase + '/', (req, res) => {
   res.status(404).send('404 Error');
 });
 
-app.post('/upload', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+app.post('/upload', (req, res, next) => {
   upload(req, res, (error) => {
     if (error) {
       console.log(error);
