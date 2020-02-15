@@ -98,7 +98,9 @@ const upload = multer({
     key: (request, file, cb) => {
       console.log(file);
       const date = '' + Date.now();
-      cb(null, date + Math.floor(Math.random() * 1000) + '.' + file.originalname.split('.').pop());
+      const folderName = 'test/';
+      const fileName = date + Math.floor(Math.random() * 1000) + '.' + file.originalname.split('.').pop();
+      cb(null, folderName + fileName);
     }
   })
 }).array('upload', 1);
