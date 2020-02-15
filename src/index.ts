@@ -128,6 +128,6 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'DEVTEST')
 }
 
 app.listen(port, () => {
-  console.log('\nInquantir Backend (TypeScript) started in mode \'' + process.env.NODE_ENV + '\'');
+  console.log('\nInquantir Backend (TypeScr) started in mode \'' + process.env.NODE_ENV + '\'');
   console.log('Port: ' + port);
 });
