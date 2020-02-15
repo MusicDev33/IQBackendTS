@@ -114,10 +114,10 @@ app.post(apiBase + 'upload/upload', (req, res, next) => {
   upload(req, res, (error) => {
     if (error) {
       console.log(error);
-      return res.status(500).send('Could not upload file!');
+      return res.status(500).json({msg: 'Error on uploading file...'});
     }
     console.log('File uploaded successfully.');
-    return res.status(200).send('File uploaded successfully');
+    return res.status(200).json({msg: 'File uploaded successfully!'});
   });
 });
 
