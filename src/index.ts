@@ -121,6 +121,8 @@ app.post(apiBase + '/upload', (req, res, next) => {
   });
 });
 
+console.log(apiBase + '/upload');
+
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'DEVTEST') {
   const httpsServer = https.createServer(credentials, app);
 }
