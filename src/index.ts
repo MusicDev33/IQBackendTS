@@ -110,7 +110,7 @@ app.get(apiBase + '/', (req, res) => {
   res.status(404).send('404 Error');
 });
 
-app.post(apiBase + '/upload', (req, res, next) => {
+app.post(apiBase + 'upload', (req, res, next) => {
   upload(req, res, (error) => {
     if (error) {
       console.log(error);
@@ -121,13 +121,13 @@ app.post(apiBase + '/upload', (req, res, next) => {
   });
 });
 
-console.log(apiBase + '/upload');
+console.log(apiBase + 'upload');
 
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'DEVTEST') {
   const httpsServer = https.createServer(credentials, app);
 }
 
 app.listen(port, () => {
-  console.log('\nInquantir Backend (TypeScr) started in mode \'' + process.env.NODE_ENV + '\'');
+  console.log('\nInquantir Backend (TypeScript) started in mode \'' + process.env.NODE_ENV + '\'');
   console.log('Port: ' + port);
 });
