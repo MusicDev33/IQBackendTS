@@ -101,6 +101,10 @@ const upload = multer({
       const folderName = 'test/';
       const fileName = date + Math.floor(Math.random() * 1000) + '.' + file.originalname.split('.').pop();
       cb(null, folderName + fileName);
+    },
+    contentType: (request, file, cb) => {
+      const fileExtension = file.originalname.split('.').pop();
+      cb(null, 'image/' + fileExtension);
     }
   })
 }).array('upload', 1);
