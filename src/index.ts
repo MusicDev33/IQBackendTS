@@ -85,7 +85,6 @@ app.use(apiBase + 'feedback', FeedbackRoutes);
 app.use(apiBase + 'search', SearchRoutes);
 
 // AWS Setup
-const spacesEndpoint = new Endpoint('sfo2.digitaloceanspaces.com');
 const s3 = new S3({
   endpoint: 'sfo2.digitaloceanspaces.com'
 });
@@ -126,8 +125,6 @@ app.post(apiBase + 'upload/upload', (req, res, next) => {
     return res.status(200).json({msg: 'File uploaded successfully!'});
   });
 });
-
-console.log(apiBase + 'upload');
 
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'DEVTEST') {
   const httpsServer = https.createServer(credentials, app);

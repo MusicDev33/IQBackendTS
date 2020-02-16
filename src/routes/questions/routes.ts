@@ -8,6 +8,7 @@ router.post('/:questionid/answers/add', passport.authenticate('jwt', {session: f
 router.post('/:questionid/:userid/:answerid/vote', passport.authenticate('jwt', {session: false}), RouteFunctions.addVoteToAnswerRoute);
 
 router.get('/', RouteFunctions.getAllQuestions);
+router.get('/developer/sitemapdata', RouteFunctions.getSitemapDataRoute);
 router.get('/questions/today', RouteFunctions.getHotQuestions);
 router.get('/:questionid/answers', RouteFunctions.getQuestionAnswers);
 router.get('/param/:param/:paramvalue', RouteFunctions.getQuestionByParamRoute);

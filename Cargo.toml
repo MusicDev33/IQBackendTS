@@ -1,0 +1,5 @@
+[package]
+
+name = "iqbts-rust"
+version = "0.1.0"
+authors = [ "Shelby McCowan <itsme@shelbymccowan.com>" ]
