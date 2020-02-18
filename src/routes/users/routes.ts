@@ -18,7 +18,6 @@ const authLimit = rateLimit({
     'Too many login attempts have been made'
 });
 
-
 // ROUTES
 
 router.post('/register', registerLimit, RouteFunctions.registerUserRoute);
@@ -35,7 +34,6 @@ router.post('/set/:userid/:setparam', passport.authenticate('jwt', {session: fal
 
 // GETTERS
 router.get('/:userid/questions', RouteFunctions.getUserQuestionsRoute);
-
 
 const UserRoutes = router;
 export default UserRoutes;

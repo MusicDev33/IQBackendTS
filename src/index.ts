@@ -115,12 +115,13 @@ app.get(apiBase + '/', (req, res) => {
   res.status(404).send('404 Error');
 });
 
-app.post(apiBase + 'upload/upload', (req, res, next) => {
+app.post(apiBase + 'upload/img', passport.authenticate('jwt', {session: false}), (req, res, next) => {
   upload(req, res, (error) => {
     if (error) {
       console.log(error);
       return res.status(500).json({msg: 'Error on uploading file...'});
     }
+    console.log(req.file.originalname);
     console.log('File uploaded successfully.');
     return res.status(200).json({msg: 'File uploaded successfully!'});
   });
