@@ -106,7 +106,7 @@ const upload = multer({
       cb(null, 'image/' + fileExtension);
     }
   })
-}).array('upload', 1);
+}).single('upload');
 
 // create public folder with the index.html when finished
 app.use(express.static(path.join(__dirname, 'public')));
@@ -116,9 +116,12 @@ app.get(apiBase + '/', (req, res) => {
 });
 
 app.post(apiBase + 'upload/img', upload, passport.authenticate('jwt', {session: false}), (req, res, next) => {
-  console.log(req.files);
+  console.log(req.file);
+  const file = req.file as any;
+  const fileURL = 'https://cdn.inquantir.com/' + file['key'];
+  console.log(file['key']);
   console.log('File uploaded successfully.');
-  return res.status(200).json({msg: 'File uploaded successfully!'});
+  return res.status(200).json({msg: 'File uploaded successfully!', fileURL: fileURL});
 });
 
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'DEVTEST') {
