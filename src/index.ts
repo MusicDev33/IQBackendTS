@@ -116,7 +116,7 @@ app.get(apiBase + '/', (req, res) => {
 });
 
 app.post(apiBase + 'upload/img', upload, passport.authenticate('jwt', {session: false}), (req, res, next) => {
-  console.log(req.file);
+  console.log(req.files);
   console.log('File uploaded successfully.');
   return res.status(200).json({msg: 'File uploaded successfully!'});
 });
