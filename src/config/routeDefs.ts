@@ -5,5 +5,6 @@ import SourceRoutes from '@routes/sources/routes';
 import FeedRoutes from '@routes/feed/routes';
 import FeedbackRoutes from '@routes/feedback/routes';
 import SearchRoutes from '@routes/search/routes';
+import UploadRoutes from '@routes/uploads/routes';
 
-export { UserRoutes, QuestionRoutes, SubjectRoutes, SourceRoutes, FeedRoutes, FeedbackRoutes, SearchRoutes };
+export { UserRoutes, QuestionRoutes, SubjectRoutes, SourceRoutes, FeedRoutes, FeedbackRoutes, SearchRoutes, UploadRoutes };

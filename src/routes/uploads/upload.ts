@@ -1,27 +1,13 @@
-import { S3, Endpoint } from 'aws-sdk';
-import multer from 'multer';
-import multerS3 from 'multer-s3';
+import { Request, Response } from 'express';
 
-// AWS Setup
-const s3 = new S3({
-  endpoint: 'sfo2.digitaloceanspaces.com'
-});
-
-const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: 'iqcdn1',
-    acl: 'public-read',
-    key: (request, file, cb) => {
-      console.log(file);
-      const date = '' + Date.now();
-      const folderName = 'test/';
-      const fileName = date + Math.floor(Math.random() * 1000) + '.' + file.originalname.split('.').pop();
-      cb(null, folderName + fileName);
-    },
-    contentType: (request, file, cb) => {
-      const fileExtension = file.originalname.split('.').pop();
-      cb(null, 'image/' + fileExtension);
-    }
-  })
-}).array('upload', 1);
+export const uploadQuestionRoute = async (req: Request, res: Response) => {
+  if (req.file) {
+    console.log(req.file);
+    const file = req.file as any;
+    const fileURL = 'https://cdn.inquantir.com/' + file['key'];
+    console.log('File uploaded successfully.');
+    return res.status(200).json({msg: 'File uploaded successfully!', fileURL: fileURL});
+  } else {
+    return res.status(500).json({msg: 'Something went wrong...'});
+  }
+};
