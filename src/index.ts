@@ -97,7 +97,7 @@ const upload = multer({
     key: (request, file, cb) => {
       console.log(file);
       const date = '' + Date.now();
-      const folderName = 'test/';
+      const folderName = 'qcontent/';
       const fileName = date + Math.floor(Math.random() * 1000) + '.' + file.originalname.split('.').pop();
       cb(null, folderName + fileName);
     },
