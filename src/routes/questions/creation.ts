@@ -21,8 +21,8 @@ export const addQuestionRoute = async (req: Request, res: Response) => {
     askerHandle: req.body.askerHandle,
     votes: 1,
     views: 1,
-    details: '',
-    time: '',
+    details: req.body.details ? req.body.details : '',
+    time: req.body.time ? req.body.time : '',
     tags: req.body.tags ? req.body.tags : []
   });
 
