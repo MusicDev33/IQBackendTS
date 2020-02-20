@@ -12,7 +12,7 @@ export const getAllSourcesRoute = async (req: Request, res: Response) => {
 
 export const getQuestionsFromSourceRoute = async (req: Request, res: Response) => {
   const source = await sourceService.findOneSourceByParameter('_id', req.params.sourceid);
-  const questions = await questionService.findQuestionsByParameter('homeworkSource', source.name);
+  const questions = await questionService.findQuestionsByParameter('homeworkSource', source.name, {_id: -1});
 
   if (questions) {
     return res.json({success: true, questions: questions});

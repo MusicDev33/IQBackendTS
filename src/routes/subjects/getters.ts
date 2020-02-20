@@ -5,7 +5,7 @@ import { Request, Response } from 'express';
 // This route isn't quite as performant as it could be
 export const getSubjectQuestionsRoute = async (req: Request, res: Response) => {
   const subject = await subjectService.findOneSubjectByParameter('subjectURL', req.params.subjecturl);
-  const questions = await questionService.findQuestionsByParameter('subject', subject.name);
+  const questions = await questionService.findQuestionsByParameter('subject', subject.name, {_id: -1});
   if (questions) {
     return res.json({success: true, questions: questions});
   }
