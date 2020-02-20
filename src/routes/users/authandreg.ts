@@ -10,7 +10,7 @@ const userController = UserController.getInstance();
 
 export const registerUserRoute = (req: Request, res: Response) => {
   const validateRes = validateRegister(req.body);
-  if (validateRes.success) {
+  if (!validateRes.success) {
     return res.json({success: false, msg: validateRes.msg});
   }
 
