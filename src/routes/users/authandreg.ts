@@ -9,8 +9,9 @@ import IControllerResponse from '@interfaces/IControllerResponse';
 const userController = UserController.getInstance();
 
 export const registerUserRoute = (req: Request, res: Response) => {
-  if (!validateRegister(req.body)) {
-    return res.json({success: false, msg: 'You probably filled out a form incorrectly.'});
+  const validateRes = validateRegister(req.body);
+  if (validateRes.success) {
+    return res.json({success: false, msg: validateRes.msg});
   }
 
   const newUser = new User({
