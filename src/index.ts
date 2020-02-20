@@ -115,7 +115,7 @@ app.get(apiBase + '/', (req, res) => {
   res.status(404).send('404 Error');
 });
 
-app.post(apiBase + 'upload/question/img', upload, passport.authenticate('jwt', {session: false}), (req, res, next) => {
+app.post(apiBase + 'upload/question/img', upload, (req, res, next) => {
   console.log(req.file);
   const file = req.file as any;
   const fileURL = 'https://cdn.inquantir.com/' + file['key'];
