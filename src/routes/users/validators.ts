@@ -1,6 +1,10 @@
 export function validateRegister(body: any): {success: boolean, msg: string} {
   if (body.handle.indexOf(' ') > -1 || !body.handle.match(/^[a-z0-9_]+$/g)) {
-    return {success: false, msg: 'You have illegal characters in your handle!'};
+    return {success: false, msg: 'You have illegal characters in your handle! For some reason, we decided that uppercase letters are illegal.'};
+  }
+
+  if (body.handle.length > 20) {
+    return {success: false, msg: 'Handle length is limited to 20 characters. Sorry.'};
   }
 
   if (!body.firstName.match(/^[a-zA-Z0-9_\-']+$/g) || !body.lastName.match(/^[a-zA-Z0-9_\-']+$/g)) {
