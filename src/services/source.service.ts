@@ -40,12 +40,12 @@ class SourceService extends EntityService<ISource> {
     }
   }
 
-  public async searchSourceByParam(param: string, paramValue: string): Promise<ISource[]> {
+  public async searchSourceByParam(param: string, paramValue: string, limit: number = 30): Promise<ISource[]> {
     try {
       const regexp = '^' + paramValue;
       const query: any = {};
-      query[param] = {$regex: regexp, $options: 'i'}
-      const sources = Source.find(query).lean().exec();
+      query[param] = {$regex: regexp, $options: 'i'};
+      const sources = Source.find(query).limit(limit).lean().exec();
       return sources;
     } catch (err) {
       console.log(err);
@@ -65,12 +65,12 @@ class SourceService extends EntityService<ISource> {
     }
   }
 
-  public async findSourcesByParameter(param: string, paramValue: string, sort: any = {_id: 1}): Promise<ISource[]> {
+  public async findSourcesByParameter(param: string, paramValue: string, sort: any = {_id: 1}, limit: number = 30): Promise<ISource[]> {
     try {
-      let query: any = {};
+      const query: any = {};
       query[param] = paramValue;
-      let foundSources = await Source.find(query).sort(sort).exec();
-      return foundSources
+      const foundSources = await Source.find(query).sort(sort).limit(limit).exec();
+      return foundSources;
     } catch (err) {
       console.log(err);
       return null;

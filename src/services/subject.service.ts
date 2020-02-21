@@ -18,9 +18,9 @@ class SubjectService extends EntityService<ISubject> {
 
   public async findOneSubjectByParameter(param: string, paramValue: string): Promise<ISubject> {
     try {
-      let query: any = {};
+      const query: any = {};
       query[param] = paramValue;
-      let foundSubject = await Subject.findOne(query).exec();
+      const foundSubject = await Subject.findOne(query).exec();
       return foundSubject;
     } catch (err) {
       console.log(err);
@@ -48,12 +48,12 @@ class SubjectService extends EntityService<ISubject> {
     }
   }
 
-  public async searchSubjectByParam(param: string, paramValue: string): Promise<ISubject[]> {
+  public async searchSubjectByParam(param: string, paramValue: string, limit = 30): Promise<ISubject[]> {
     try {
       const regexp = '^' + paramValue;
-      let query: any = {};
-      query[param] = {$regex: regexp, $options: 'i'}
-      const subjects = Subject.find(query).lean().exec();
+      const query: any = {};
+      query[param] = {$regex: regexp, $options: 'i'};
+      const subjects = Subject.find(query).limit(limit).lean().exec();
       if (subjects) {
         return subjects;
       }

@@ -1,6 +1,6 @@
 import { User, IUser } from '@models/user.model';
 import bcryptjs = require('bcryptjs');
-import IControllerResponse from "@interfaces/IControllerResponse";
+import IControllerResponse from '@interfaces/IControllerResponse';
 
 // Singleton pattern, still not sure how I feel about it
 export default class UserController {
@@ -40,7 +40,7 @@ export default class UserController {
 
   public async addGoogleUser(newUser: IUser): Promise<IControllerResponse> {
     try {
-      const existingUsers = await User.find( { $or: [{'email': newUser.email}, {'handle': newUser.handle}]} ).exec();
+      const existingUsers = await User.find( { $or: [{email: newUser.email}, {handle: newUser.handle}]} ).exec();
       if (existingUsers.length) {
         return {success: false, msg: 'Error - Try another handle or email'};
       }

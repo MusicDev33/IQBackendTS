@@ -7,10 +7,10 @@ import { Request, Response } from 'express';
 export const globalSearchRoute = async (req: Request, res: Response) => {
   const searchTerm = req.params.searchterm.replace(/[-]+/, ' ');
 
-  const questions = await questionService.searchQuestionsByParam('questionText', searchTerm);
-  const sources = await sourceService.searchSourceByParam('name', searchTerm);
-  const subjects = await subjectService.searchSubjectByParam('name', searchTerm);
-  const users = await userService.searchUserByParam('name', searchTerm);
+  const questions = await questionService.searchQuestionsByParam('questionText', searchTerm, 5);
+  const sources = await sourceService.searchSourceByParam('name', searchTerm, 5);
+  const subjects = await subjectService.searchSubjectByParam('name', searchTerm, 5);
+  const users = await userService.searchUserByParam('name', searchTerm, 5);
 
   return res.status(200).json({success: true, users: users, questions: questions, subjects: subjects, sources: sources});
 };

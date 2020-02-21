@@ -18,7 +18,7 @@ class VoteService extends EntityService<IVote> {
 
   public async addVote(newVote: IVote): Promise<IVote> {
     try {
-      let savedVote = await newVote.save();
+      const savedVote = await newVote.save();
       return savedVote;
     } catch (err) {
       console.log(err);

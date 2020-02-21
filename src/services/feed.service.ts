@@ -15,15 +15,15 @@ class FeedService {
   }
 
   // This should probably be implemented in a way that uses the question and user services...
-  public async getUserFeed(userID: string): Promise<IQuestion[]> {
+  public async getUserFeed(userID: string, limit: number = 30): Promise<IQuestion[]> {
     try {
       const user = await User.findById(userID).exec();
       let questions: IQuestion[];
       if (user.currentSubjects.length) {
-        questions = await Question.find({subject: {$in: user.currentSubjects}}).sort({_id: -1}).limit(30).exec();
+        questions = await Question.find({subject: {$in: user.currentSubjects}}).sort({_id: -1}).limit(limit).exec();
         return questions;
       }
-      questions = await Question.find({}).sort({_id: -1}).limit(30).exec();
+      questions = await Question.find({}).sort({_id: -1}).limit(limit).exec();
       return questions;
     } catch (err) {
       console.log(err);

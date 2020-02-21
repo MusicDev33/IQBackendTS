@@ -33,9 +33,9 @@ class AnswerService extends EntityService<IAnswer> {
 
   public async findOneAnswerByParameter(param: string, paramValue: string): Promise<IAnswer> {
     try {
-      let query: any = {};
+      const query: any = {};
       query[param] = paramValue;
-      let foundAnswer = await Answer.findOne(query).exec();
+      const foundAnswer = await Answer.findOne(query).exec();
       return foundAnswer;
     } catch (err) {
       console.log(err);
@@ -43,11 +43,11 @@ class AnswerService extends EntityService<IAnswer> {
     }
   }
 
-  public async findAnswersByParameter(param: string, paramValue: string, sort: any = {_id: 1}): Promise<IAnswer[]> {
+  public async findAnswersByParameter(param: string, paramValue: string, sort: any = {_id: 1}, limit: number = 60): Promise<IAnswer[]> {
     try {
-      let query: any = {};
+      const query: any = {};
       query[param] = paramValue;
-      let foundAnswers = await Answer.find(query).sort(sort).exec();
+      const foundAnswers = await Answer.find(query).sort(sort).limit(limit).exec();
       return foundAnswers;
     } catch (err) {
       console.log(err);

@@ -1,6 +1,6 @@
 import { User, IUser } from '@models/user.model';
 import bcryptjs = require('bcryptjs');
-import IControllerResponse from "@interfaces/IControllerResponse";
+import IControllerResponse from '@interfaces/IControllerResponse';
 
 // Singleton pattern, still not sure how I feel about it
 class UserService {
@@ -68,9 +68,9 @@ class UserService {
 
   public async findOneUserByParameter(param: string, paramValue: string): Promise<IUser> {
     try {
-      let query: any = {};
+      const query: any = {};
       query[param] = paramValue;
-      let foundUser = await User.findOne(query).exec();
+      const foundUser = await User.findOne(query).exec();
       if (foundUser) {
         return foundUser;
       } else {
@@ -96,12 +96,12 @@ class UserService {
     }
   }
 
-  public async searchUserByParam(param: string, paramValue: string): Promise<IUser[]> {
+  public async searchUserByParam(param: string, paramValue: string, limit = 30): Promise<IUser[]> {
     try {
       const regexp = '^' + paramValue;
-      let query: any = {};
-      query[param] = {$regex: regexp, $options: 'i'}
-      const users = User.find(query).lean().exec();
+      const query: any = {};
+      query[param] = {$regex: regexp, $options: 'i'};
+      const users = User.find(query).limit(limit).lean().exec();
       return users;
     } catch (err) {
       console.log(err);

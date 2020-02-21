@@ -48,11 +48,11 @@ class QuestionService extends EntityService<IQuestion> {
     }
   }
 
-  public async findQuestionsByParameter(param: string, paramValue: string, sort: any = {_id: 1}): Promise<IQuestion[]> {
+  public async findQuestionsByParameter(param: string, paramValue: string, sort: any = {_id: 1}, limit: number = 30): Promise<IQuestion[]> {
     try {
       const query: any = {};
       query[param] = paramValue;
-      const foundQuestions = await Question.find(query).sort(sort).exec();
+      const foundQuestions = await Question.find(query).sort(sort).limit(limit).exec();
       if (foundQuestions) {
         return foundQuestions;
       }
@@ -78,12 +78,12 @@ class QuestionService extends EntityService<IQuestion> {
     }
   }
 
-  public async searchQuestionsByParam(param: string, paramValue: string): Promise<IQuestion[]> {
+  public async searchQuestionsByParam(param: string, paramValue: string, limit: number = 30): Promise<IQuestion[]> {
     try {
       const regexp = '^' + paramValue;
       const query: any = {};
       query[param] = {$regex: regexp, $options: 'i'};
-      const questions = Question.find(query).lean().exec();
+      const questions = Question.find(query).limit(limit).lean().exec();
       return questions;
     } catch (err) {
       console.log(err);
