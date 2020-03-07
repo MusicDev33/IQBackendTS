@@ -51,6 +51,14 @@ export const getAllQuestions = async (req: Request, res: Response) => {
   return res.json({success: false, msg: 'Could not get all questions'});
 };
 
+export const searchQuestionByParamRoute = async (req: Request, res: Response) => {
+  const searchTerm = req.params.searchterm.replace(/[-]+/, ' ');
+
+  const questions = await questionService.searchQuestionsByParam('questionText', searchTerm, 5);
+
+  return res.status(200).json({success: true, questions: questions});
+};
+
 export const getSitemapDataRoute = async (req: Request, res: Response) => {
   let urls = 'https://inquantir.com/\nhttps://inquantir.com/login\nhttps://inquantir.com/register\nhttps://inquantir.com/support\nhttps://inquantir.com/dashboard\n';
   const questions = await questionService.getAllQuestions();

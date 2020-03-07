@@ -1,11 +1,11 @@
-import { PassportStatic } from 'passport'
+import { PassportStatic } from 'passport';
 import { Strategy, ExtractJwt, StrategyOptions } from 'passport-jwt';
 import { IUser } from '@models/user.model';
 import UserController from '@services/user.controller';
 import { dbConfig } from '@config/database';
 
-export const userPassportAuth = async function(passport: PassportStatic) {
-  let options: StrategyOptions = {
+export const userPassportAuth = async (passport: PassportStatic) => {
+  const options: StrategyOptions = {
     secretOrKey: dbConfig.secret,
     jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt')
   };
@@ -17,5 +17,5 @@ export const userPassportAuth = async function(passport: PassportStatic) {
     } else {
       return next(null, false);
     }
-  }))
-}
+  }));
+};

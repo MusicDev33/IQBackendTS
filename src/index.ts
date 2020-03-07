@@ -1,3 +1,4 @@
+// tslint:disable-next-line
 require('tsconfig-paths/register');
 import bodyParser from 'body-parser';
 import cors from 'cors';
