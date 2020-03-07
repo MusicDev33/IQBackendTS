@@ -22,6 +22,13 @@ export const searchSourcesRoute = async (req: Request, res: Response) => {
   res.status(200).json({success: true, sources: sources});
 };
 
+export const searchQuestionRoute = async (req: Request, res: Response) => {
+  const searchTerm = req.params.searchterm.replace(/[-]+/, ' ');
+  const questions = await questionService.searchQuestionsByParam('questionText', searchTerm);
+
+  res.status(200).json({success: true, questions: questions});
+};
+
 export const searchSubjectsRoute = async (req: Request, res: Response) => {
   const searchTerm = req.params.searchterm.replace(/[-]+/, ' ');
   const subjects = await subjectService.searchSubjectByParam('name', searchTerm);

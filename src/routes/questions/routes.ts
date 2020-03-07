@@ -14,7 +14,6 @@ router.get('/:questionid/answers', RouteFunctions.getQuestionAnswers);
 router.get('/param/:param/:paramvalue', RouteFunctions.getQuestionByParamRoute);
 router.get('/params/:param/:paramvalue', RouteFunctions.getQuestionsByParamRoute);
 router.get('/:questionid/answers/:userid/votes', RouteFunctions.getUserVotesRoute);
-router.get('/search/:searchterm', RouteFunctions.searchQuestionByParamRoute);
 
 router.put('/set/:questionid/:setparam', passport.authenticate('jwt', {session: false}), RouteFunctions.setQuestionPropertyRoute);
 router.put('/:questionid/answers/:answerid', passport.authenticate('jwt', {session: false}), RouteFunctions.editAnswerRoute);
